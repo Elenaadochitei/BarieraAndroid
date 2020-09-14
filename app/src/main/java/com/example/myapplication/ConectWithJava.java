@@ -17,7 +17,7 @@ public interface ConectWithJava {
 
     String API_ROUTE = "postNewUser";
 
-    String API_ROUTEE = "updateData";
+    String API_ROUTEE = "updateData/{id}";
 
     String API_ROUTEEE = "deleteData/{id}";
 
@@ -31,7 +31,7 @@ public interface ConectWithJava {
     Call<Nume_Nr_Masina> insertNewUser(@Body Nume_Nr_Masina insertNewUser);
 
     @PUT(API_ROUTEE)
-    Call<Nume_Nr_Masina> updateUser(@Body Nume_Nr_Masina updateUser);
+    Call<String> updateUser( @Path("id") String id, @Body HashMap<String, String> updateUser);
 
     /*
         @Body -> @RequestBody
@@ -45,4 +45,5 @@ public interface ConectWithJava {
 
     @GET(API_ROUTEEEE)
     Call<String> getID(@QueryMap HashMap<String, String> getIdFromMap);
+
 }

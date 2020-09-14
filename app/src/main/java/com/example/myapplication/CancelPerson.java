@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -39,7 +40,7 @@ public class CancelPerson extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -47,7 +48,7 @@ public class CancelPerson extends AppCompatActivity {
 
         saveButton1 = (Button) findViewById(R.id.save_button);
 
-        userName = (EditText) findViewById(R.id.simpleEditText);
+        userName = (EditText) findViewById(R.id.plateRegister);
         plate_register = (EditText) findViewById(R.id.simpleEditText1);
 
         saveButton1.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +64,7 @@ public class CancelPerson extends AppCompatActivity {
         //Shared pref - > pare a fi o  memorie a telefonului
         try {
             // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.100.37:8080/";
+            String BASE_URL = "http://192.168.0.106:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
