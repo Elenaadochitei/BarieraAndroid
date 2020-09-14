@@ -53,7 +53,8 @@ public class MyAccount extends AppCompatActivity {
         setContentView(R.layout.activity_my_account);
         plateRegister = findViewById(R.id.plateRegister);
         userName = (EditText) findViewById(R.id.userName);
-        newPlateRegister= findViewById(R.id.newPlateRegister);
+        newPlateRegister = findViewById(R.id.newPlateRegister);
+
         //make edit text non editable
         plateRegister.setEnabled(true);
 
@@ -108,21 +109,18 @@ public class MyAccount extends AppCompatActivity {
         updatePlate.put("nrMasina", plateRegister.getText().toString());
 
         Call<String> call = conectWithJava.getID(updatePlate);
-      //  String test = String.valueOf(call);
-
-
+        
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
-                updatePlate.remove("nrMasina",plateRegister.getText().toString());
                 updatePlate.put("nrMasina", newPlateRegister.getText().toString());
+
                 call2.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
-                        String a=newPlateRegister.getText().toString();
+                        String a = newPlateRegister.getText().toString();
                         newPlateRegister.setText(a);
-                      //  System.out.println(response.body());
                     }
 
                     @Override
@@ -131,6 +129,7 @@ public class MyAccount extends AppCompatActivity {
                     }
                 });
             }
+
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();

@@ -31,6 +31,17 @@
         android:hint="Introduceti noul numar"
         android:textSize="25dp" />
 
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="431dp"
+        android:background="#0C0C0C"
+        tools:ignore="MissingConstraints" />
+
     <ProgressBar
         android:id="@+id/progressBar6"
         style="?android:attr/progressBarStyle"
