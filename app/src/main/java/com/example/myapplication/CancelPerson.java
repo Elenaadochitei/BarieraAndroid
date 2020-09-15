@@ -117,6 +117,11 @@ public class CancelPerson extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println(response.body());
+                if(response.body()==null){
+                    userName.setText("Reintrocuceti numele");
+                    plate_register.setText("Reintroduceti numarul masinii");
+                    saveButton1.setText("Date incorecte");
+                }
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {

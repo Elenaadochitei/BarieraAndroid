@@ -54,30 +54,18 @@ public class MyAccount extends AppCompatActivity {
         plateRegister = findViewById(R.id.plateRegister);
         userName = (EditText) findViewById(R.id.userName);
         newPlateRegister = findViewById(R.id.newPlateRegister);
-
-        //make edit text non editable
         plateRegister.setEnabled(true);
 
         editButton = findViewById(R.id.editButton);
         keyListener = plateRegister.getKeyListener();
-        // editButton.setOnClickListener(v -> makeEditable(simpleEditText));
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
+
+
             }
         });
-    }
-
-
-    private void makeEditable(EditText editText) {
-        boolean enabled = !editText.isEnabled();
-        editText.setEnabled(enabled);
-        if (enabled) {
-            editText.setKeyListener(keyListener);
-        } else {
-            editText.setKeyListener(null);
-        }
     }
 
     public void saveData() {
@@ -119,8 +107,13 @@ public class MyAccount extends AppCompatActivity {
                 call2.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
-                        String a = newPlateRegister.getText().toString();
-                        newPlateRegister.setText(a);
+                        System.out.println(response.body());
+                        if(response.body()==null){
+                            userName.setText("Reintrocuceti numele");
+                            plateRegister.setText("Reintroduceti numarul masinii");
+                            newPlateRegister.setText("Reintroduceti noul numar");
+                            editButton.setText("Date incorecte");
+                        }
                     }
 
                     @Override
@@ -132,6 +125,7 @@ public class MyAccount extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
+
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });

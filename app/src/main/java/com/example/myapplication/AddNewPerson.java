@@ -99,6 +99,7 @@ public class AddNewPerson extends AppCompatActivity {
             @Override
             public void onResponse(Call<Nume_Nr_Masina> call, Response<Nume_Nr_Masina> response) {
                 plate_register.setText(response.body().getNrMasina());
+
             }
             @Override
             public void onFailure(Call<Nume_Nr_Masina> call, Throwable t) {
