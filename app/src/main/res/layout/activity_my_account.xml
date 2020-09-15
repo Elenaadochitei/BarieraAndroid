@@ -27,7 +27,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="425dp"
+        android:layout_marginBottom="395dp"
         android:hint="Introduceti noul numar"
         android:textSize="25dp" />
 
@@ -37,10 +37,11 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="431dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="529dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
+
 
     <ProgressBar
         android:id="@+id/progressBar6"
@@ -48,8 +49,7 @@
         android:layout_width="235dp"
         android:layout_height="236dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp" />
-
+        android:layout_marginEnd="4dp" />
 
     <Switch
         android:id="@+id/switch1"
@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="782dp"
+        android:layout_marginEnd="239dp"
+        android:layout_marginBottom="30dp"
         android:background="@null"
         android:checked="true"
         android:text="Notificari:"
@@ -74,8 +74,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="-4dp"
-        android:layout_marginBottom="553dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="458dp"
         android:hint="Introduceti numarul masinii"
         android:textSize="25dp" />
 
@@ -86,8 +86,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="-6dp"
-        android:layout_marginBottom="492dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginBottom="526dp"
         android:hint="Introduceti numele"
         android:textSize="25dp" />
 
@@ -97,8 +97,8 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="492dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginBottom="395dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
 
@@ -108,10 +108,11 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="554dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="462dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
+
 
     <TextView
         android:id="@+id/textView5"
@@ -119,13 +120,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="693dp"
+        android:layout_marginEnd="267dp"
+        android:layout_marginBottom="683dp"
         android:background="@null"
         android:text="Bine ai venit!"
         android:textColor="#0C0C0C"
         android:textSize="25dp" />
-
 
     <Button
         android:id="@+id/editButton"
@@ -134,8 +134,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="226dp"
-        android:layout_marginBottom="339dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginBottom="298dp"
         android:background="@android:color/transparent"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Edit/Save" />

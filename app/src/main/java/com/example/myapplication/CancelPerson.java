@@ -57,7 +57,7 @@ public class CancelPerson extends AppCompatActivity {
                 saveData();
             }
         });
-        loadFromAndroidLocalDataBase();
+   //     loadFromAndroidLocalDataBase();
     }
 
     public void saveData() {
@@ -82,15 +82,15 @@ public class CancelPerson extends AppCompatActivity {
         }
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
-
-    public void loadFromAndroidLocalDataBase() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS1, MODE_PRIVATE);
-        Set<String> add_person_register_plate = sharedPreferences.getStringSet("add_person_register_plate", new HashSet<>());
-        String nr_masina = (String) add_person_register_plate.toArray()[0];
-        String nume = (String) add_person_register_plate.toArray()[1];
-        userName.setText(nume);
-        plate_register.setText(nr_masina);
-    }
+//
+//    public void loadFromAndroidLocalDataBase() {
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS1, MODE_PRIVATE);
+//        Set<String> add_person_register_plate = sharedPreferences.getStringSet("add_person_register_plate", new HashSet<>());
+//        String nr_masina = (String) add_person_register_plate.toArray()[0];
+//        String nume = (String) add_person_register_plate.toArray()[1];
+//        userName.setText(nume);
+//        plate_register.setText(nr_masina);
+//    }
 
     private void deleteNumeNrMasina() throws Exception {
 
