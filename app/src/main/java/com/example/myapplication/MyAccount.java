@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.view.Window;
@@ -63,7 +64,6 @@ public class MyAccount extends AppCompatActivity {
             public void onClick(View v) {
                 saveData();
 
-
             }
         });
     }
@@ -72,7 +72,7 @@ public class MyAccount extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.0.24:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -108,7 +108,7 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
                         System.out.println(response.body());
-                        if(response.body()==null){
+                        if(response.body().equals("Product does not exist...")){
                             userName.setText("Reintrocuceti numele");
                             plateRegister.setText("Reintroduceti numarul masinii");
                             newPlateRegister.setText("Reintroduceti noul numar");
@@ -130,6 +130,5 @@ public class MyAccount extends AppCompatActivity {
             }
         });
     }
-
 
 }

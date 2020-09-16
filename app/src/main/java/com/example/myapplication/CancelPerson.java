@@ -63,7 +63,7 @@ public class CancelPerson extends AppCompatActivity {
         //Shared pref - > pare a fi o  memorie a telefonului
         try {
             // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.0.24:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();

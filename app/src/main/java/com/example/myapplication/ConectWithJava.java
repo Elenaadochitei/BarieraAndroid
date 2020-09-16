@@ -10,6 +10,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 
@@ -47,3 +48,4 @@ public interface ConectWithJava {
     Call<String> getID(@QueryMap HashMap<String, String> getIdFromMap);
 
 }
+
