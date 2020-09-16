@@ -63,7 +63,7 @@ public class CancelPerson extends AppCompatActivity {
         //Shared pref - > pare a fi o  memorie a telefonului
         try {
             // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.0.24:8080/";
+            String BASE_URL = "http://192.168.0.106:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -107,7 +107,7 @@ public class CancelPerson extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println(response.body());
-                if(response.body()==null){
+                if(response.body().equals("Product does not exist...")){
                     userName.setText("Reintrocuceti numele");
                     plate_register.setText("Reintroduceti numarul masinii");
                     saveButton1.setText("Date incorecte");

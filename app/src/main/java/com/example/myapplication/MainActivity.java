@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        DataBaseHelper db = new DataBaseHelper(this);
-
         Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
         ImageButton add = (ImageButton) findViewById(R.id.add);
@@ -67,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+         //   super.onBackPressed();
             return;
         }
 
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Press AGAIN to EXIT", Toast.LENGTH_SHORT).show();
-
+       // finish();
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -81,5 +79,5 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce=false;
             }
         }, 2000);
-    }
+   }
 }

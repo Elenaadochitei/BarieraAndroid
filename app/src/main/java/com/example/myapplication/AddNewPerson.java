@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -30,14 +29,14 @@ public class AddNewPerson extends AppCompatActivity {
     private Button saveButton;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT = "add_person_register_plate";
+    private String text;
     private ConectWithJava conectWithJava;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        getSupportActionBar().hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -46,20 +45,22 @@ public class AddNewPerson extends AppCompatActivity {
         plate_register = findViewById(R.id.plate_register);
         userName = findViewById(R.id.userName);
         saveButton = findViewById(R.id.save_button);
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
             }
         });
+        //loadData();
+        //updateViews();
     }
 
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.0.24:8080/";
+            // plate_register = findViewById(R.id.textView);
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -80,14 +81,19 @@ public class AddNewPerson extends AppCompatActivity {
         numeNrMasina.add(plate_register.getText().toString());
         numeNrMasina.add(userName.getText().toString());
 
-        editor.putStringSet(TEXT, numeNrMasina);
-
+        editor.putStringSet(TEXT, numeNrMasina );
         editor.apply();
-
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        text = sharedPreferences.getString(TEXT, "add_person_register_plate");
+    }
+    public void updateViews() {
+        plate_register.setText(text);
+    }
 
-    private void insertNumeNrMasina(){
+    private void insertNumeNrMasina() {
 
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
         insertNewUser.setNrMasina(plate_register.getText().toString());
@@ -99,7 +105,6 @@ public class AddNewPerson extends AppCompatActivity {
             @Override
             public void onResponse(Call<Nume_Nr_Masina> call, Response<Nume_Nr_Masina> response) {
                 plate_register.setText(response.body().getNrMasina());
-
             }
             @Override
             public void onFailure(Call<Nume_Nr_Masina> call, Throwable t) {
