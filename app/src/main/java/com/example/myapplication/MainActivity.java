@@ -64,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     @Override
     public void onBackPressed() {
+
+        Toast.makeText(this, "Press AGAIN to EXIT", Toast.LENGTH_SHORT).show();
+//        this.doubleBackToExitPressedOnce = true;
         if (doubleBackToExitPressedOnce) {
-         //   super.onBackPressed();
+            //   super.onBackPressed();
             return;
         }
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press AGAIN to EXIT", Toast.LENGTH_SHORT).show();
        // finish();
         new Handler().postDelayed(new Runnable() {
 
