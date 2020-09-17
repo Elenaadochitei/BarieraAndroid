@@ -60,9 +60,7 @@ public class CancelPerson extends AppCompatActivity {
     }
 
     public void saveData() {
-        //Shared pref - > pare a fi o  memorie a telefonului
         try {
-            // plate_register = findViewById(R.id.textView);
             String BASE_URL = "http://192.168.0.106:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -116,7 +114,6 @@ public class CancelPerson extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
-
             }
         });
     }

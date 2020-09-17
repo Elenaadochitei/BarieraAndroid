@@ -108,7 +108,7 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
                         System.out.println(response.body());
-                        if(response.body().equals("Product does not exist...")){
+                        if (response.body().equals("Product does not exist...")) {
                             userName.setText("Reintrocuceti numele");
                             plateRegister.setText("Reintroduceti numarul masinii");
                             newPlateRegister.setText("Reintroduceti noul numar");
@@ -125,7 +125,6 @@ public class MyAccount extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
-
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
