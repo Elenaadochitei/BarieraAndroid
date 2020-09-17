@@ -59,7 +59,7 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
             // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
