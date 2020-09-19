@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Base64;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,8 +71,11 @@ public class LogInPerson extends AppCompatActivity {
     public void checkNameAndPassword() {
 
         initializeRetrofit();
-
-        Call<Boolean> call = conectWithLogInJavaJava.checkNameAndPassword(nume.getText().toString(), parola.getText().toString());
+        String originalInput = nume.getText().toString();
+        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
+        String originalInput1 = parola.getText().toString();
+        String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
+        Call<Boolean> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
 
         call.enqueue(new Callback<Boolean>() {
 
