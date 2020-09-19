@@ -2,6 +2,9 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,7 +59,6 @@ public class LogInPerson extends AppCompatActivity {
                 checkNameAndPassword();
             }
         });
-
     }
 
     public void openMainActivity() {
@@ -91,7 +93,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.1.186:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -108,4 +110,3 @@ public class LogInPerson extends AppCompatActivity {
         }
     }
 
-}

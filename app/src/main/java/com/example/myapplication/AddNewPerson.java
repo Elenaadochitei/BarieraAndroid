@@ -51,7 +51,6 @@ public class AddNewPerson extends AppCompatActivity {
                 saveData();
             }
         });
-
     }
 
     public void saveData() {
@@ -59,7 +58,7 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
             // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -84,8 +83,13 @@ public class AddNewPerson extends AppCompatActivity {
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
-
-
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        text = sharedPreferences.getString(TEXT, "add_person_register_plate");
+    }
+    public void updateViews() {
+        plate_register.setText(text);
+    }
     private void insertNumeNrMasina() {
 
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
