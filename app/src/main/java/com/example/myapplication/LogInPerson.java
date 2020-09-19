@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +32,9 @@ public class LogInPerson extends AppCompatActivity {
 
     private ConectWithLogInJava conectWithLogInJavaJava;
 
+
+    SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,24 @@ public class LogInPerson extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
         logIn = findViewById(R.id.log_in_button);  //initializare buton
-        logIn.setOnClickListener(v -> openMainActivity());
+
+        sp = getSharedPreferences("logIn", MODE_PRIVATE);
+
+        if (sp.getBoolean("logged", false)) {
+            openMainActivity();
+        }
+
+        nume = findViewById(R.id.nume);
+        parola = findViewById(R.id.parola);
+
+        logIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainActivity();
+                sp.edit().putBoolean("logged", true).apply();
+            }
+        });
+
 
         nume = findViewById(R.id.nume);
         parola = findViewById(R.id.parola);
@@ -62,6 +83,7 @@ public class LogInPerson extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void checkNameAndPassword() {
 
         initializeRetrofit();
@@ -72,7 +94,7 @@ public class LogInPerson extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                boolean isUserPresentInDb = response.body().booleanValue();
+                boolean isUserPresentInDb = response.body() == null ? false : response.body();
                 if (isUserPresentInDb) {
                     openMainActivity();
                 } else {
@@ -89,7 +111,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.1.186:8080/";
+            String BASE_URL = "http://192.168.0.109:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
