@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        DataBaseHelper db = new DataBaseHelper(this);
-
         Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
         ImageButton add = (ImageButton) findViewById(R.id.add);
