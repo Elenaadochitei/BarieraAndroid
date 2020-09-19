@@ -1,4 +1,7 @@
 package com.example.myapplication;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +45,7 @@ public class LogInPerson extends AppCompatActivity {
 
         setContentView(R.layout.activity_log_in);
 
-        Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Bine ai venitt!", Toast.LENGTH_SHORT).show();
 
         logIn = findViewById(R.id.log_in_button);  //initializare buton
         logIn.setOnClickListener(v -> openMainActivity());
@@ -105,4 +109,4 @@ public class LogInPerson extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
     }
-}
+

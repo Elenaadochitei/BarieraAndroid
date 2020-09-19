@@ -1,7 +1,10 @@
 package com.example.myapplication;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
     private ConectWithJava conectWithJava;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +52,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public void openActivity2() {
         Intent intent = new Intent(this, AddNewPerson.class);
         startActivity(intent);
     }
+
     public void openActivity3() {
         Intent intent = new Intent(this, CancelPerson.class);
         startActivity(intent);
     }
+
     public void openActivity4() {
         Intent intent = new Intent(this, MyAccount.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            moveTaskToBack(true);
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press AGAIN to EXIT", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

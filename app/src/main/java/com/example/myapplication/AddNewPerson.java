@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -52,8 +51,6 @@ public class AddNewPerson extends AppCompatActivity {
                 saveData();
             }
         });
-        //loadData();
-        //updateViews();
     }
 
     public void saveData() {
@@ -93,7 +90,6 @@ public class AddNewPerson extends AppCompatActivity {
     public void updateViews() {
         plate_register.setText(text);
     }
-
     private void insertNumeNrMasina() {
 
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
