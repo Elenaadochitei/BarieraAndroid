@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -52,15 +51,12 @@ public class AddNewPerson extends AppCompatActivity {
                 saveData();
             }
         });
-        //loadData();
-        //updateViews();
     }
 
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            // plate_register = findViewById(R.id.textView);
             String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -93,7 +89,6 @@ public class AddNewPerson extends AppCompatActivity {
     public void updateViews() {
         plate_register.setText(text);
     }
-
     private void insertNumeNrMasina() {
 
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();

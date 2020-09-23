@@ -19,7 +19,7 @@
         <activity android:name=".MyAccount"></activity>
         <activity android:name=".CancelPerson" />
         <activity android:name=".AddNewPerson" />
-        <activity android:name=".LogInPerson">
+        <activity android:name=".MainActivity"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -39,7 +40,7 @@ public class CancelPerson extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -47,7 +48,7 @@ public class CancelPerson extends AppCompatActivity {
 
         saveButton1 = (Button) findViewById(R.id.save_button);
 
-        userName = (EditText) findViewById(R.id.simpleEditText);
+        userName = (EditText) findViewById(R.id.plateRegister);
         plate_register = (EditText) findViewById(R.id.simpleEditText1);
 
         saveButton1.setOnClickListener(new View.OnClickListener() {
@@ -56,14 +57,11 @@ public class CancelPerson extends AppCompatActivity {
                 saveData();
             }
         });
-        loadFromAndroidLocalDataBase();
     }
 
     public void saveData() {
-        //Shared pref - > pare a fi o  memorie a telefonului
         try {
-            // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.100.37:8080/";
+            String BASE_URL = "http://192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -80,15 +78,6 @@ public class CancelPerson extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
-    }
-
-    public void loadFromAndroidLocalDataBase() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS1, MODE_PRIVATE);
-        Set<String> add_person_register_plate = sharedPreferences.getStringSet("add_person_register_plate", new HashSet<>());
-        String nr_masina = (String) add_person_register_plate.toArray()[0];
-        String nume = (String) add_person_register_plate.toArray()[1];
-        userName.setText(nume);
-        plate_register.setText(nr_masina);
     }
 
     private void deleteNumeNrMasina() throws Exception {
@@ -116,11 +105,15 @@ public class CancelPerson extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println(response.body());
+                if(response.body().equals("Product does not exist...")){
+                    userName.setText("Reintrocuceti numele");
+                    plate_register.setText("Reintroduceti numarul masinii");
+                    saveButton1.setText("Date incorecte");
+                }
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
-
             }
         });
     }
