@@ -83,16 +83,16 @@ public class LogInPerson extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
-                LoginInfo log=response.body();
+                LoginInfo log = response.body();
 
                 boolean isUserPresentInDb = log.userActive;
                 if (isUserPresentInDb) {
                     openMainActivity();
-                    SharedPreferences sharedPreferences = getSharedPreferences(ID,MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(ID,log.id);
-                    System.out.println("EDITOR "+sharedPreferences.getString(ID,null));
-                   sharedPreferences.getString(ID,null);
+                    editor.putString(ID, log.id);
+                    System.out.println("EDITOR " + sharedPreferences.getString(ID, null));
+                    sharedPreferences.getString(ID, null);
                     editor.apply();
 
                 } else {
@@ -109,7 +109,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.1.186:8080/";
+            String BASE_URL = "http://192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -125,4 +125,5 @@ public class LogInPerson extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
     }
+}
 
