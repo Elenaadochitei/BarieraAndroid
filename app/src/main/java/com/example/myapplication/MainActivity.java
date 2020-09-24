@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
     }
-}
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
