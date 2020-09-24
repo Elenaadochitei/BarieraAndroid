@@ -24,6 +24,8 @@ public interface ConectWithJava {
 
     String API_ROUTEEEE = "getUserByNameAndPlate";
 
+
+
     @Headers({
             "Content-type: application/json"
     })

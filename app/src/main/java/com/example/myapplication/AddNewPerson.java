@@ -22,6 +22,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static com.example.myapplication.LogInPerson.ID;
+
 public class AddNewPerson extends AppCompatActivity {
 
     private TextView plate_register;
@@ -91,7 +93,6 @@ public class AddNewPerson extends AppCompatActivity {
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
         insertNewUser.setNrMasina(plate_register.getText().toString());
         insertNewUser.setNume(userName.getText().toString());
-
         Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<Nume_Nr_Masina>() {
