@@ -16,7 +16,8 @@
 
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MyAccount"></activity>
+        <activity android:name=".MyAccount" />
+        <activity android:name=".GetUsersOfUser" />
         <activity android:name=".CancelPerson" />
         <activity android:name=".AddNewPerson" />
         <activity android:name=".MainActivity"/>
