@@ -16,5 +16,5 @@ public interface ConectWithLogInJava {
     })
 
     @GET(API_ROUTEEEEE)
-    Call<LoginInfo> checkNameAndPassword (@Query("username") String username, @Query("pass") String pass);
+    Call<Boolean> checkNameAndPassword (@Query("username") String username, @Query("pass") String pass);
 }
