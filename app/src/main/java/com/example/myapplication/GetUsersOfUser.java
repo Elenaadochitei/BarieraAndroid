@@ -87,7 +87,6 @@ public class GetUsersOfUser extends AppCompatActivity {
     private void viewMyList() {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
         sharedPreferences.getString(ID, null);
-        System.out.println(sharedPreferences.getString(ID,null)+"nnnnnnnnnnn");
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, R.id.label, guests);
         Call<List<Nume_Nr_Masina>> stringCall = conectWithJava.getNameAndPlateOfUser();
