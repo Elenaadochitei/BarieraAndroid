@@ -86,8 +86,7 @@ public class GetUsersOfUser extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
-
+    
     private void viewMyList() {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
         String test= sharedPreferences.getString(ID, null);
@@ -96,14 +95,12 @@ public class GetUsersOfUser extends AppCompatActivity {
         stringCall.enqueue(new Callback<List<Nume_Nr_Masina>>() {
             @Override
             public void onResponse(Call<List<Nume_Nr_Masina>> call, Response<List<Nume_Nr_Masina>> response) {
-                System.out.println(response.body()+"sccdd");
                 assert response.body() != null;
                 for (Nume_Nr_Masina a : response.body()) {
                     guests.add(a.getNume() + " - " + a.getNrMasina());
                 }
                 ressultat.setAdapter(adapter);
             }
-
             @Override
             public void onFailure(Call<List<Nume_Nr_Masina>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
