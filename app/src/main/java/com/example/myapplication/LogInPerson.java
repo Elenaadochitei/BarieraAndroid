@@ -1,5 +1,6 @@
 package com.example.myapplication;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Base64;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +31,7 @@ public class LogInPerson extends AppCompatActivity {
     private Button logIn;
 
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "add_person_register_plate";
+    public static final String ID = "id Admin";
 
     private ConectWithLogInJava conectWithLogInJavaJava;
 
@@ -67,23 +70,36 @@ public class LogInPerson extends AppCompatActivity {
     public void checkNameAndPassword() {
 
         initializeRetrofit();
+        String originalInput = nume.getText().toString();
+        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
+        String originalInput1 = parola.getText().toString();
+        String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
+        Call<LoginInfo> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
 
-        Call<Boolean> call = conectWithLogInJavaJava.checkNameAndPassword(nume.getText().toString(), parola.getText().toString());
 
-        call.enqueue(new Callback<Boolean>() {
+        call.enqueue(new Callback<LoginInfo>() {
 
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                boolean isUserPresentInDb = response.body().booleanValue();
+            public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
+                LoginInfo log = response.body();
+
+                boolean isUserPresentInDb = log.userActive;
                 if (isUserPresentInDb) {
                     openMainActivity();
+                    SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(ID, log.id);
+                    System.out.println("EDITOR " + sharedPreferences.getString(ID, null));
+                    sharedPreferences.getString(ID, null);
+                    editor.apply();
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "INVALID USER", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Login failed ", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<LoginInfo> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
@@ -91,7 +107,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.0.101:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();

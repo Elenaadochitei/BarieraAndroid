@@ -9,12 +9,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.HashSet;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,15 +48,13 @@ public class AddNewPerson extends AppCompatActivity {
                 saveData();
             }
         });
-
     }
 
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            // plate_register = findViewById(R.id.textView);
-            String BASE_URL = "http://192.168.0.106:8080/";
+            String BASE_URL = "http://192.168.0.101:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -84,14 +79,18 @@ public class AddNewPerson extends AppCompatActivity {
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
-
-
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        text = sharedPreferences.getString(TEXT, "add_person_register_plate");
+    }
+    public void updateViews() {
+        plate_register.setText(text);
+    }
     private void insertNumeNrMasina() {
 
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
         insertNewUser.setNrMasina(plate_register.getText().toString());
         insertNewUser.setNume(userName.getText().toString());
-
         Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<Nume_Nr_Masina>() {

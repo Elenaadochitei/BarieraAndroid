@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,8 +33,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static com.example.myapplication.LogInPerson.ID;
+
 public class GetUsersOfUser extends AppCompatActivity {
-    private static final String ID = " id";
+
     private ListView ressultat;
     private TextView label;
     private ConectWithJava conectWithJava;
@@ -52,14 +55,15 @@ public class GetUsersOfUser extends AppCompatActivity {
         initializeRetrofit();
         Toast.makeText(this, "Clik Item To Update", Toast.LENGTH_SHORT).show();
         ressultat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            private static final String TAG ="Clik!" ;
+            private static final String TAG = "Clik!";
+
             @Override
             public void onItemClick(AdapterView<?> list, View view, int position, long id) {
                 Log.i(TAG, "onListItemClick: " + position);
                 Intent intent = new Intent(view.getContext(), MyAccount.class);
                 view.getContext().startActivity(intent);
             }
-    });
+        });
     }
 
 
@@ -86,20 +90,20 @@ public class GetUsersOfUser extends AppCompatActivity {
 
     private void viewMyList() {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
-        sharedPreferences.getString(ID, null);
-
+        String test= sharedPreferences.getString(ID, null);
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, R.id.label, guests);
-        Call<List<Nume_Nr_Masina>> stringCall = conectWithJava.getNameAndPlateOfUser();
-
+        Call<List<Nume_Nr_Masina>> stringCall = conectWithJava.getNameAndPlateOfUser(test);
         stringCall.enqueue(new Callback<List<Nume_Nr_Masina>>() {
             @Override
             public void onResponse(Call<List<Nume_Nr_Masina>> call, Response<List<Nume_Nr_Masina>> response) {
+                System.out.println(response.body()+"sccdd");
                 assert response.body() != null;
                 for (Nume_Nr_Masina a : response.body()) {
                     guests.add(a.getNume() + " - " + a.getNrMasina());
                 }
                 ressultat.setAdapter(adapter);
             }
+
             @Override
             public void onFailure(Call<List<Nume_Nr_Masina>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();

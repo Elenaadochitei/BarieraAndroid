@@ -24,7 +24,7 @@ public interface ConectWithJava {
     String API_ROUTEEE = "deleteData/{id}";
 
     String API_ROUTEEEE = "getUserByNameAndPlate";
-    String API_ROUTEH = "getNameAndPlateOfUser";
+    String API_ROUTEH = "getNameAndPlateOfUser/{id}";
 
     @Headers({
             "Content-type: application/json"
@@ -50,7 +50,7 @@ public interface ConectWithJava {
     Call<String> getID(@QueryMap HashMap<String, String> getIdFromMap);
 
     @GET(API_ROUTEH)
-    Call<List<Nume_Nr_Masina>> getNameAndPlateOfUser();
+    Call<List<Nume_Nr_Masina>> getNameAndPlateOfUser(@Path("id") String id);
 
 }
 
