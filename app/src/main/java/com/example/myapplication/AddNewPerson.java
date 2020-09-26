@@ -59,7 +59,7 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.100.37:8080/";
+            String BASE_URL = "http://192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -92,11 +92,11 @@ public class AddNewPerson extends AppCompatActivity {
         plate_register.setText(text);
     }
     private void insertNumeNrMasina() {
-
+SharedPreferences sharedPreferences=getSharedPreferences(ID,MODE_PRIVATE);
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
         insertNewUser.setNrMasina(plate_register.getText().toString());
         insertNewUser.setNume(userName.getText().toString());
-        Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(insertNewUser);
+        Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(sharedPreferences.getString(ID,null),insertNewUser);
 
         call.enqueue(new Callback<Nume_Nr_Masina>() {
             @Override

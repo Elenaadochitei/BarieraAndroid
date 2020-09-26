@@ -16,7 +16,7 @@ import retrofit2.http.QueryMap;
 
 public interface ConectWithJava {
 
-    String API_ROUTE = "postNewUser";
+    String API_ROUTE = "postNewUser/{id}";
 
     String API_ROUTEE = "updateData/{id}";
 
@@ -31,7 +31,7 @@ public interface ConectWithJava {
     })
 
     @POST(API_ROUTE)
-    Call<Nume_Nr_Masina> insertNewUser(@Body Nume_Nr_Masina insertNewUser);
+    Call<Nume_Nr_Masina> insertNewUser( @Path("id") String id,@Body Nume_Nr_Masina insertNewUser);
 
     @PUT(API_ROUTEE)
     Call<String> updateUser( @Path("id") String id, @Body HashMap<String, String> updateUser);
