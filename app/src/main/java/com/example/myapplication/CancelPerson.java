@@ -61,6 +61,7 @@ public class CancelPerson extends AppCompatActivity {
 
     public void saveData() {
         try {
+
             String BASE_URL = "http://192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()

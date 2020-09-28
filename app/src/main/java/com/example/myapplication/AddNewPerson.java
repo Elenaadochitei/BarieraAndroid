@@ -9,12 +9,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.util.HashSet;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,7 +91,6 @@ public class AddNewPerson extends AppCompatActivity {
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
         insertNewUser.setNrMasina(plate_register.getText().toString());
         insertNewUser.setNume(userName.getText().toString());
-
         Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<Nume_Nr_Masina>() {

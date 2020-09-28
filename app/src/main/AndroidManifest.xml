@@ -16,17 +16,18 @@
 
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".MyAccount"></activity>
+        <activity android:name=".MyAccount" />
+        <activity android:name=".GetUsersOfUser" />
         <activity android:name=".CancelPerson" />
         <activity android:name=".AddNewPerson" />
         <activity android:name=".MainActivity"/>
+        <activity android:name=".LogInPerson">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity" />
 
     </application>
 

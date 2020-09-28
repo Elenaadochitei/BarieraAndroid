@@ -1,4 +1,6 @@
 package com.example.myapplication;
+
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -14,4 +16,5 @@ public interface ConectWithLogInJava {
     })
 
     @GET(API_ROUTEEEEE)
-    Call<Boolean> checkNameAndPassword (@Query("username") String username, @Query("pass") String pass);
+    Call<LoginInfo> checkNameAndPassword (@Query("username") String username, @Query("pass") String pass);
+}
