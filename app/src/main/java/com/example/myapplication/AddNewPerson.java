@@ -1,6 +1,4 @@
 package com.example.myapplication;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,9 +7,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.HashSet;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +69,7 @@ public class AddNewPerson extends AppCompatActivity {
                     .build();
 
             conectWithJava = retrofit.create(ConectWithJava.class);
-            insertNumeNrMasina();
+            insertNumeNrMasina(sharedPreferences);
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
@@ -75,22 +78,21 @@ public class AddNewPerson extends AppCompatActivity {
         numeNrMasina.add(plate_register.getText().toString());
         numeNrMasina.add(userName.getText().toString());
 
-        editor.putStringSet(TEXT, numeNrMasina );
+        editor.putStringSet(TEXT, numeNrMasina);
         editor.apply();
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        text = sharedPreferences.getString(TEXT, "add_person_register_plate");
-    }
-    public void updateViews() {
-        plate_register.setText(text);
-    }
-    private void insertNumeNrMasina() {
+
+
+    private void insertNumeNrMasina(SharedPreferences sharedPreferences) {
 
         Nume_Nr_Masina insertNewUser = new Nume_Nr_Masina();
         insertNewUser.setNrMasina(plate_register.getText().toString());
         insertNewUser.setNume(userName.getText().toString());
+
+        String id = sharedPreferences.getString("ID", "null" );
+        insertNewUser.setUserID(id);
+
         Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<Nume_Nr_Masina>() {
@@ -98,6 +100,7 @@ public class AddNewPerson extends AppCompatActivity {
             public void onResponse(Call<Nume_Nr_Masina> call, Response<Nume_Nr_Masina> response) {
                 plate_register.setText(response.body().getNrMasina());
             }
+
             @Override
             public void onFailure(Call<Nume_Nr_Masina> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();

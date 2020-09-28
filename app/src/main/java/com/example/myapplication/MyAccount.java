@@ -1,11 +1,8 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.view.Window;
@@ -15,12 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,7 +73,7 @@ public class MyAccount extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.0.101:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -102,7 +99,7 @@ public class MyAccount extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.0.101:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
 
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -161,7 +158,7 @@ public class MyAccount extends AppCompatActivity {
     }
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.0.101:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();

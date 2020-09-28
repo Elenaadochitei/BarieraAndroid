@@ -2,13 +2,10 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,16 +56,6 @@ public class LogInPerson extends AppCompatActivity {
             openMainActivity();
         }
 
-        nume = findViewById(R.id.nume);
-        parola = findViewById(R.id.parola);
-
-        logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainActivity();
-                sp.edit().putBoolean("logged", true).apply();
-            }
-        });
 
 
         nume = findViewById(R.id.nume);
@@ -108,6 +95,7 @@ public class LogInPerson extends AppCompatActivity {
                 boolean isUserPresentInDb = log.userActive;
         
                 if (isUserPresentInDb) {
+                    sp.edit().putBoolean("logged", true).apply();
                     openMainActivity();
                     SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -118,6 +106,7 @@ public class LogInPerson extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Login failed ", Toast.LENGTH_SHORT).show();
+                    sp.edit().putBoolean("logged", false).apply();
                 }
             }
 
@@ -131,7 +120,7 @@ public class LogInPerson extends AppCompatActivity {
     private void initializeRetrofit() {
         try {
 
-            String BASE_URL = "http://192.168.0.101:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
