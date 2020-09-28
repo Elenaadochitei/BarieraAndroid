@@ -3,8 +3,10 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -12,11 +14,26 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
+
 public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle t;
+    private NavigationView nv;
 
     private TextView textView;
     private ConectWithJava conectWithJava;
     boolean doubleBackToExitPressedOnce = false;
+
+    private MenuItem logOut;
+
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +44,44 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        logOut = findViewById(R.id.log_out_button);
+
+
+        dl = (DrawerLayout) findViewById(R.id.activity_main);
+        t = new ActionBarDrawerToggle(this, dl, R.string.fab_transformation_sheet_behavior, R.string.hide_bottom_view_on_scroll_behavior);
+
+        dl.addDrawerListener(t);
+
+        t.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        nv = (NavigationView) findViewById(R.id.nv);
+
+        sp = getSharedPreferences("logIn", MODE_PRIVATE);
+
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.account:
+                        Toast.makeText(MainActivity.this, "Contul meu", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.settings:
+                        Toast.makeText(MainActivity.this, "Setari", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.log_out_button:
+                        Toast.makeText(MainActivity.this, "V-ati deconectat de la aplicatie!", Toast.LENGTH_SHORT).show();
+                        sp.edit().putBoolean("logged", false).apply();
+                        openLogInActivity();
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
+
         Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
         ImageButton add = (ImageButton) findViewById(R.id.add);
@@ -36,34 +91,39 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity2();
+                openActivityAddNewPerson();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity3();
+                openActivityCancelPerson();
             }
         });
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openActivity4();
+                openActivityMyAccount();
             }
         });
     }
 
-    public void openActivity2() {
+    public void openLogInActivity() {
+        Intent intent = new Intent(this, LogInPerson.class);
+        startActivity(intent);
+    }
+
+    public void openActivityAddNewPerson() {
         Intent intent = new Intent(this, AddNewPerson.class);
         startActivity(intent);
     }
 
-    public void openActivity3() {
+    public void openActivityCancelPerson() {
         Intent intent = new Intent(this, CancelPerson.class);
         startActivity(intent);
     }
 
-    public void openActivity4() {
+    public void openActivityMyAccount() {
         Intent intent = new Intent(this, MyAccount.class);
         startActivity(intent);
     }
@@ -82,5 +142,13 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (t.onOptionsItemSelected(item))
+            return true;
+        return super.onOptionsItemSelected(item);
     }
 }

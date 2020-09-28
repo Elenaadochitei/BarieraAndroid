@@ -54,7 +54,7 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.0.101:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();

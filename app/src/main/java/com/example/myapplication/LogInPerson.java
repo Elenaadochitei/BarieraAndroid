@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +36,9 @@ public class LogInPerson extends AppCompatActivity {
 
     private ConectWithLogInJava conectWithLogInJavaJava;
 
+
+    SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +52,24 @@ public class LogInPerson extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Bine ai venitt!", Toast.LENGTH_SHORT).show();
 
         logIn = findViewById(R.id.log_in_button);  //initializare buton
-        logIn.setOnClickListener(v -> openMainActivity());
+
+        sp = getSharedPreferences("logIn", MODE_PRIVATE);
+
+        if (sp.getBoolean("logged", false)) {
+            openMainActivity();
+        }
+
+        nume = findViewById(R.id.nume);
+        parola = findViewById(R.id.parola);
+
+        logIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainActivity();
+                sp.edit().putBoolean("logged", true).apply();
+            }
+        });
+
 
         nume = findViewById(R.id.nume);
         parola = findViewById(R.id.parola);
@@ -67,6 +88,7 @@ public class LogInPerson extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void checkNameAndPassword() {
 
         initializeRetrofit();
@@ -74,8 +96,8 @@ public class LogInPerson extends AppCompatActivity {
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
         String originalInput1 = parola.getText().toString();
         String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
-        Call<LoginInfo> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
 
+        Call<LoginInfo> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
 
         call.enqueue(new Callback<LoginInfo>() {
 
@@ -84,6 +106,7 @@ public class LogInPerson extends AppCompatActivity {
                 LoginInfo log = response.body();
 
                 boolean isUserPresentInDb = log.userActive;
+        
                 if (isUserPresentInDb) {
                     openMainActivity();
                     SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
@@ -107,6 +130,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
+
             String BASE_URL = "http://192.168.0.101:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()

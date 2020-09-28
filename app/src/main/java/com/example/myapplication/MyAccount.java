@@ -103,6 +103,7 @@ public class MyAccount extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
             String BASE_URL = "http://192.168.0.101:8080/";
+
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
