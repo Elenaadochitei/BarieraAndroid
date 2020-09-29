@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "NrMasina";
-    private static final String TABLE_NUME = "numere";
+    private static final String DATABASE_NAME = "mydb";
+    private static final String TABLE_NUME = "bariera";
     private static final String KEY_ID = "id";
-    private static final String KEY_NUME = "nume";
-    private static final String KEY_NR_MASINA = "nr masina";
+    private static final String KEY_NUME = "name";
+    private static final String KEY_NR_MASINA = "plateRegister";
 
     SQLiteDatabase database;
 

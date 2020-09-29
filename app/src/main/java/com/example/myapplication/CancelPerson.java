@@ -28,12 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CancelPerson extends AppCompatActivity {
-    private TextView plate_register;
+    private TextView plateRegister;
     private TextView userName;
-    private Button saveButton1;
-    public static final String SHARED_PREFS1 = "sharedPrefs";
-    public static final String TEXT1 = "cancel_person_register_plate";
-
+    private Button saveButton;
     private ConectWithJava conectWithJava;
 
     @Override
@@ -46,12 +43,12 @@ public class CancelPerson extends AppCompatActivity {
 
         setContentView(R.layout.activity_cancel_person);
 
-        saveButton1 = (Button) findViewById(R.id.save_button);
+        saveButton = (Button) findViewById(R.id.save_button);
 
-        userName = (EditText) findViewById(R.id.plateRegister);
-        plate_register = (EditText) findViewById(R.id.simpleEditText1);
+        userName = (EditText) findViewById(R.id.name);
+        plateRegister = (EditText) findViewById(R.id.plate_register);
 
-        saveButton1.setOnClickListener(new View.OnClickListener() {
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
@@ -73,18 +70,18 @@ public class CancelPerson extends AppCompatActivity {
                     .build();
 
             conectWithJava = retrofit.create(ConectWithJava.class);
-            deleteNumeNrMasina();
+            deleteNameAndPlateRegister();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteNumeNrMasina() throws Exception {
+    private void deleteNameAndPlateRegister() throws Exception {
 
         HashMap<String, String> deleteUsers = new HashMap<>();
-        deleteUsers.put("nume", userName.getText().toString());
-        deleteUsers.put("nrMasina", plate_register.getText().toString());
+        deleteUsers.put("name", userName.getText().toString());
+        deleteUsers.put("plateRegister", plateRegister.getText().toString());
 
         Call<String> call = conectWithJava.getID(deleteUsers);
 
@@ -93,24 +90,27 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 callDeleteById(response);
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
     private void callDeleteById(Response<String> response) {
         Call<String> stringCall = conectWithJava.deleteUser(response.body());
         stringCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println(response.body());
-                if(response.body().equals("Product does not exist...")){
-                    userName.setText("Reintrocuceti numele");
-                    plate_register.setText("Reintroduceti numarul masinii");
-                    saveButton1.setText("Date incorecte");
+                if (response.body().equals("Product does not exist...")) {
+                    userName.setText("Reintroduceti numele");
+                    plateRegister.setText("Reintroduceti numarul masinii");
+                    saveButton.setText("Date incorecte");
                 }
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();

@@ -29,16 +29,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LogInPerson extends AppCompatActivity {
-    private TextView nume;
-    private TextView parola;
+    private TextView userName;
+    private TextView password;
     private Button logIn;
-
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "add_person_register_plate";
-
+    public static final String ID = "id Admin";
     private ConectWithLogInJava conectWithLogInJavaJava;
-
-
     SharedPreferences sp;
 
     @Override
@@ -48,34 +43,19 @@ public class LogInPerson extends AppCompatActivity {
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_log_in);
 
-        Toast.makeText(getApplicationContext(), "Bine ai venitt!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
-        logIn = findViewById(R.id.log_in_button);  //initializare buton
-
+        logIn = findViewById(R.id.log_in_button);
         sp = getSharedPreferences("logIn", MODE_PRIVATE);
 
         if (sp.getBoolean("logged", false)) {
             openMainActivity();
         }
 
-        nume = findViewById(R.id.nume);
-        parola = findViewById(R.id.parola);
-
-        logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainActivity();
-                sp.edit().putBoolean("logged", true).apply();
-            }
-        });
-
-
-        nume = findViewById(R.id.nume);
-        parola = findViewById(R.id.parola);
-
+        userName = findViewById(R.id.name);
+        password = findViewById(R.id.password);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,9 +73,9 @@ public class LogInPerson extends AppCompatActivity {
     public void checkNameAndPassword() {
 
         initializeRetrofit();
-        String originalInput = nume.getText().toString();
+        String originalInput = userName.getText().toString();
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-        String originalInput1 = parola.getText().toString();
+        String originalInput1 = password.getText().toString();
         String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
         Call<Boolean> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
 

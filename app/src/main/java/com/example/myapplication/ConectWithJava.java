@@ -29,7 +29,7 @@ public interface ConectWithJava {
     })
 
     @POST(API_ROUTE)
-    Call<Nume_Nr_Masina> insertNewUser(@Body Nume_Nr_Masina insertNewUser);
+    Call<NameAndPlateRegister> insertNewUser(@Body NameAndPlateRegister insertNewUser);
 
     @PUT(API_ROUTEE)
     Call<String> updateUser( @Path("id") String id, @Body HashMap<String, String> updateUser);

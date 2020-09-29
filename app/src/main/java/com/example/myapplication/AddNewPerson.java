@@ -24,7 +24,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class AddNewPerson extends AppCompatActivity {
 
-    private TextView plate_register;
+    private TextView plateRegister;
     private TextView userName;
     private Button saveButton;
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -42,8 +42,20 @@ public class AddNewPerson extends AppCompatActivity {
 
         setContentView(R.layout.activity_add_new_person);
 
-        plate_register = findViewById(R.id.plate_register);
-        userName = findViewById(R.id.userName);
+        selectedImage = (ImageView) findViewById(R.id.selectedImage);
+        Button openGallery = (Button) findViewById(R.id.openGallery);
+
+        openGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, 1);
+            }
+        });
+
+        plateRegister = findViewById(R.id.plate_register);
+        userName = findViewById(R.id.name);
         saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +73,6 @@ public class AddNewPerson extends AppCompatActivity {
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
-
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
@@ -73,10 +84,9 @@ public class AddNewPerson extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
-
-        HashSet<String> numeNrMasina = new HashSet<>();
-        numeNrMasina.add(plate_register.getText().toString());
-        numeNrMasina.add(userName.getText().toString());
+        HashSet<String> nameAndPlateRegister = new HashSet<>();
+        nameAndPlateRegister.add(plateRegister.getText().toString());
+        nameAndPlateRegister.add(userName.getText().toString());
 
         editor.putStringSet(TEXT, numeNrMasina );
         editor.apply();
@@ -97,13 +107,14 @@ public class AddNewPerson extends AppCompatActivity {
 
         Call<Nume_Nr_Masina> call = conectWithJava.insertNewUser(insertNewUser);
 
-        call.enqueue(new Callback<Nume_Nr_Masina>() {
+        call.enqueue(new Callback<NameAndPlateRegister>() {
             @Override
-            public void onResponse(Call<Nume_Nr_Masina> call, Response<Nume_Nr_Masina> response) {
-                plate_register.setText(response.body().getNrMasina());
+            public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
+                plateRegister.setText(response.body().getPlateRegister());
             }
+
             @Override
-            public void onFailure(Call<Nume_Nr_Masina> call, Throwable t) {
+            public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
