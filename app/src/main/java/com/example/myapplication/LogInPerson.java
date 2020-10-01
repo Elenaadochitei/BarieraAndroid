@@ -1,4 +1,5 @@
 package com.example.myapplication;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,16 +25,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LogInPerson extends AppCompatActivity {
-    private TextView nume;
-    private TextView parola;
+    private TextView userName;
+    private TextView password;
     private Button logIn;
-
-    public static final String SHARED_PREFS = "sharedPrefs";
     public static final String ID = "id Admin";
-
     private ConectWithLogInJava conectWithLogInJavaJava;
-
-
     SharedPreferences sp;
 
     @Override
@@ -43,31 +39,25 @@ public class LogInPerson extends AppCompatActivity {
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_log_in);
 
-        Toast.makeText(getApplicationContext(), "Bine ai venitt!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
-        logIn = findViewById(R.id.log_in_button);  //initializare buton
-
+        logIn = findViewById(R.id.log_in_button);
         sp = getSharedPreferences("logIn", MODE_PRIVATE);
 
         if (sp.getBoolean("logged", false)) {
             openMainActivity();
         }
 
-
-
-        nume = findViewById(R.id.nume);
-        parola = findViewById(R.id.parola);
-
+        userName = findViewById(R.id.name);
+        password = findViewById(R.id.password);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkNameAndPassword();
             }
         });
-
     }
 
     public void openMainActivity() {
@@ -79,9 +69,9 @@ public class LogInPerson extends AppCompatActivity {
     public void checkNameAndPassword() {
 
         initializeRetrofit();
-        String originalInput = nume.getText().toString();
+        String originalInput = userName.getText().toString();
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-        String originalInput1 = parola.getText().toString();
+        String originalInput1 = password.getText().toString();
         String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
 
         Call<LoginInfo> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
@@ -93,7 +83,7 @@ public class LogInPerson extends AppCompatActivity {
                 LoginInfo log = response.body();
 
                 boolean isUserPresentInDb = log.userActive;
-        
+
                 if (isUserPresentInDb) {
                     sp.edit().putBoolean("logged", true).apply();
                     openMainActivity();
@@ -105,7 +95,7 @@ public class LogInPerson extends AppCompatActivity {
                     editor.apply();
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Login failed ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Logare nereusita ", Toast.LENGTH_SHORT).show();
                     sp.edit().putBoolean("logged", false).apply();
                 }
             }
@@ -119,7 +109,6 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-
             String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -136,5 +125,4 @@ public class LogInPerson extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
 }

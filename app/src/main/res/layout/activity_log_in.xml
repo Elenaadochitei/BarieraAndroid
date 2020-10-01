@@ -47,7 +47,7 @@
         tools:layout_editor_absoluteY="92dp" />
 
     <EditText
-        android:id="@+id/nume"
+        android:id="@+id/name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -61,7 +61,7 @@
         tools:layout_editor_absoluteY="92dp" />
 
     <EditText
-        android:id="@+id/parola"
+        android:id="@+id/password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

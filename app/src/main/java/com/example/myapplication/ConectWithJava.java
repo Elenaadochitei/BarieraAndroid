@@ -11,7 +11,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 
@@ -31,17 +30,10 @@ public interface ConectWithJava {
     })
 
     @POST(API_ROUTE)
-    Call<Nume_Nr_Masina> insertNewUser(@Body Nume_Nr_Masina insertNewUser);
+    Call<NameAndPlateRegister> insertNewUser(@Body NameAndPlateRegister insertNewUser);
 
     @PUT(API_ROUTEE)
     Call<String> updateUser( @Path("id") String id, @Body HashMap<String, String> updateUser);
-
-    /*
-        @Body -> @RequestBody
-        @Path -> @PathVariable
-        @Qery -> @RequestParam
-        @QueryMap ->
-     */
 
     @DELETE(API_ROUTEEE)
     Call<String> deleteUser(@Path("id") String id);
