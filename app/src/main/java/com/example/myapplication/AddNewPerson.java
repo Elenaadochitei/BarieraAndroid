@@ -90,7 +90,7 @@ public class AddNewPerson extends AppCompatActivity {
 
         editor.putStringSet(TEXT, numeNrMasina );
         editor.apply();
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Date salvate", Toast.LENGTH_SHORT).show();
     }
     public void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
