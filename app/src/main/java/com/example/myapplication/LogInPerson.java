@@ -109,7 +109,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.100.37:8080/";
+            String BASE_URL = "http://192.168.100.23:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();

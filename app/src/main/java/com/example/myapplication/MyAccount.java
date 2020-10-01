@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.KeyListener;
@@ -32,6 +33,7 @@ public class MyAccount extends AppCompatActivity {
     private TextView name;
     private TextView newPlateRegister;
     private Button editButton;
+    private Button editButton2;
     KeyListener keyListener;
     private ConectWithJava conectWithJava;
 
@@ -48,6 +50,7 @@ public class MyAccount extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         newPlateRegister = findViewById(R.id.newPlateRegister);
         plateRegister.setEnabled(true);
+        editButton2 = findViewById(R.id.editButton2);
         editButton = findViewById(R.id.editButton);
         keyListener = plateRegister.getKeyListener();
 
@@ -55,15 +58,50 @@ public class MyAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveData();
+
             }
         });
+        editButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHistory();
+
+            }
+        });
+    }
+
+    public void viewHistory() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        try {
+            String BASE_URL = "http://192.168.100.23:8080/";
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            conectWithJava = retrofit.create(ConectWithJava.class);
+            viewUsersNamesAndPlates();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+    private void viewUsersNamesAndPlates(){
+        initializeRetrofit();
+        Intent intent = new Intent(this, GetUsersOfUser.class);
+        startActivity(intent);
     }
 
     public void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.100.37:8080/";
+            String BASE_URL = "http://192.168.100.23:8080/";
+
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -82,19 +120,16 @@ public class MyAccount extends AppCompatActivity {
         Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateNameAndPlateRegister() {
+    private void  updateNameAndPlateRegister() {
         HashMap<String, String> updatePlate = new HashMap<>();
         updatePlate.put("name", name.getText().toString());
         updatePlate.put("plateRegister", plateRegister.getText().toString());
-
         Call<String> call = conectWithJava.getID(updatePlate);
-
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
                 updatePlate.put("plateRegister", newPlateRegister.getText().toString());
-
                 call2.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
@@ -120,4 +155,23 @@ public class MyAccount extends AppCompatActivity {
             }
         });
     }
+    private void initializeRetrofit() {
+        try {
+            String BASE_URL = "http://192.168.100.23:8080/";
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            conectWithJava = retrofit.create(ConectWithJava.class);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

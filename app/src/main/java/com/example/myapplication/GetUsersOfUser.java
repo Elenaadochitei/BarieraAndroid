@@ -65,7 +65,7 @@ public class GetUsersOfUser extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.100.37:8080/";
+            String BASE_URL = "http://192.168.100.23:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -87,18 +87,18 @@ public class GetUsersOfUser extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
         String test= sharedPreferences.getString(ID, null);
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, R.id.label, guests);
-        Call<List<Nume_Nr_Masina>> stringCall = conectWithJava.getNameAndPlateOfUser(test);
-        stringCall.enqueue(new Callback<List<Nume_Nr_Masina>>() {
+        Call<List<NameAndPlateRegister>> stringCall = conectWithJava.getNameAndPlateOfUser(test);
+        stringCall.enqueue(new Callback<List<NameAndPlateRegister>>() {
             @Override
-            public void onResponse(Call<List<Nume_Nr_Masina>> call, Response<List<Nume_Nr_Masina>> response) {
+            public void onResponse(Call<List<NameAndPlateRegister>> call, Response<List<NameAndPlateRegister>> response) {
                 assert response.body() != null;
-                for (Nume_Nr_Masina a : response.body()) {
-                    guests.add(a.getNume() + " - " + a.getNrMasina());
+                for (NameAndPlateRegister a : response.body()) {
+                    guests.add(a.getName() + " - " + a.getPlateRegister());
                 }
                 ressultat.setAdapter(adapter);
             }
             @Override
-            public void onFailure(Call<List<Nume_Nr_Masina>> call, Throwable t) {
+            public void onFailure(Call<List<NameAndPlateRegister>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
