@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -68,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "V-ati deconectat de la aplicatie!", Toast.LENGTH_SHORT).show();
                         sp.edit().putBoolean("logged", false).apply();
                         openLogInActivity();
+                        break;
                     default:
                         return true;
                 }

@@ -1,7 +1,4 @@
 package com.example.myapplication;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +7,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,22 +73,35 @@ public class LogInPerson extends AppCompatActivity {
         String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
         String originalInput1 = password.getText().toString();
         String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
-        Call<Boolean> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
 
-        call.enqueue(new Callback<Boolean>() {
+        Call<LoginInfo> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
+
+        call.enqueue(new Callback<LoginInfo>() {
 
             @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                boolean isUserPresentInDb = response.body() == null ? false : response.body();
+            public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
+                LoginInfo log = response.body();
+
+                boolean isUserPresentInDb = log.userActive;
+
                 if (isUserPresentInDb) {
+                    sp.edit().putBoolean("logged", true).apply();
                     openMainActivity();
+                    SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(ID, log.id);
+                    System.out.println("EDITOR " + sharedPreferences.getString(ID, null));
+                    sharedPreferences.getString(ID, null);
+                    editor.apply();
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "INVALID USER", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Logare nereusita ", Toast.LENGTH_SHORT).show();
+                    sp.edit().putBoolean("logged", false).apply();
                 }
             }
 
             @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
+            public void onFailure(Call<LoginInfo> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
@@ -100,7 +109,7 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.0.109:8080/";
+            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -116,4 +125,4 @@ public class LogInPerson extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
+}

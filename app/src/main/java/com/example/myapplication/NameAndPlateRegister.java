@@ -1,19 +1,39 @@
 package com.example.myapplication;
 
+import java.time.LocalDateTime;
+
 public class NameAndPlateRegister {
 
-    String nume;
-    String nrMasina;
+    String userID;
+    String name;
+    String plateRegister;
+    LocalDateTime expirationDate;
 
     public NameAndPlateRegister() {
     }
 
-    public Nume_Nr_Masina(String nume, String nr_masina) {
-
-        this.nume = nume;
-        this.nrMasina = nr_masina;
+    public NameAndPlateRegister(String userID, String name, String plateRegister, LocalDateTime expirationDate) {
+        this.userID = userID;
+        this.name = name;
+        this.plateRegister = plateRegister;
+        this.expirationDate = expirationDate;
     }
 
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public String getName() {
         return name;
