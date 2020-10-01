@@ -217,7 +217,6 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
 
-
         String id = sharedPreferences.getString("ID", "null");
         insertNewUser.setUserID(id);
         Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);

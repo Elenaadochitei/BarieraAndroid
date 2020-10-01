@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,6 +23,7 @@ public interface ConectWithJava {
     String API_ROUTEEE = "deleteData/{id}";
 
     String API_ROUTEEEE = "getUserByNameAndPlate";
+    String API_ROUTEH = "getNameAndPlateOfUser/{id}";
 
     @Headers({
             "Content-type: application/json"
@@ -38,6 +40,9 @@ public interface ConectWithJava {
 
     @GET(API_ROUTEEEE)
     Call<String> getID(@QueryMap HashMap<String, String> getIdFromMap);
+
+    @GET(API_ROUTEH)
+    Call<List<Nume_Nr_Masina>> getNameAndPlateOfUser(@Path("id") String id);
 
 }
 

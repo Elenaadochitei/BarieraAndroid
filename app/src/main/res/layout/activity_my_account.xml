@@ -19,6 +19,19 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp" />
 
+    <Button
+        android:id="@+id/editButton2"
+        android:layout_width="177dp"
+        android:layout_height="87dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="129dp"
+        android:layout_marginBottom="177dp"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/primary_text_dark_nodisable"
+        android:text="Vezi istoric" />
+
     <EditText
         android:id="@+id/newPlateRegister"
         android:layout_width="match_parent"
@@ -121,7 +134,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="267dp"
-        android:layout_marginBottom="683dp"
+        android:layout_marginBottom="681dp"
         android:background="@null"
         android:text="Bine ai venit!"
         android:textColor="#0C0C0C"

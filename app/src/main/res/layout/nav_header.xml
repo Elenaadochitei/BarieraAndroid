@@ -10,6 +10,6 @@
         android:layout_height="130dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/acc"/>
+        android:background="@drawable/ic_launcher_foreground"/>
 
 </LinearLayout>
