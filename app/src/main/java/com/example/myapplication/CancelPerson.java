@@ -55,7 +55,7 @@ public class CancelPerson extends AppCompatActivity {
 
     public void saveData() {
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -71,7 +71,7 @@ public class CancelPerson extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "S-au salvat datele", Toast.LENGTH_SHORT).show();
     }
 
     private void deleteNameAndPlateRegister() throws Exception {
@@ -90,7 +90,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a reusit stergerea", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -110,7 +110,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a gasit persoana", Toast.LENGTH_LONG).show();
             }
         });
     }
