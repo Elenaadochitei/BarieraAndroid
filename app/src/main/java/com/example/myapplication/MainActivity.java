@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press AGAIN to EXIT", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Apasa din nou pentru a iesi", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

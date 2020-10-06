@@ -69,9 +69,9 @@ public class CancelPerson extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             deleteNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(this, "S-au salvat datele", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Date Salvate", Toast.LENGTH_SHORT).show();
     }
 
     private void deleteNameAndPlateRegister() throws Exception {
@@ -90,7 +90,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nu s-a reusit stergerea", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Nu s-a efectuat stergerea", Toast.LENGTH_LONG).show();
             }
         });
     }

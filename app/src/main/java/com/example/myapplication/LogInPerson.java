@@ -95,21 +95,21 @@ public class LogInPerson extends AppCompatActivity {
                     editor.apply();
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Logare nereusita ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Logare Nereusita ", Toast.LENGTH_SHORT).show();
                     sp.edit().putBoolean("logged", false).apply();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginInfo> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Logare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -122,7 +122,7 @@ public class LogInPerson extends AppCompatActivity {
 
             conectWithLogInJavaJava = retrofit.create(ConectWithLogInJava.class);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
         }
     }
 }

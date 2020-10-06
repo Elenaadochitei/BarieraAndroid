@@ -186,7 +186,7 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -199,7 +199,7 @@ public class AddNewPerson extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             insertNameAndPlateRegister(sharedPreferences);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG).show();
         }
         HashSet<String> nameAndPlateRegister = new HashSet<>();
         nameAndPlateRegister.add(plateRegister.getText().toString());
@@ -229,7 +229,7 @@ public class AddNewPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
     }

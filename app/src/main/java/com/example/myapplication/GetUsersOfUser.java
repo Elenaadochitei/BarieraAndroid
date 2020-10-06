@@ -49,7 +49,7 @@ public class GetUsersOfUser extends AppCompatActivity {
         ressultat = findViewById(R.id.ressultat);
         label = findViewById(R.id.label);
         initializeRetrofit();
-        Toast.makeText(this, "Clik Item To Update", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selecteaza pentru a modifica", Toast.LENGTH_SHORT).show();
         ressultat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private static final String TAG = "Clik!";
 
@@ -65,7 +65,7 @@ public class GetUsersOfUser extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -79,7 +79,7 @@ public class GetUsersOfUser extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             viewMyList();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
         }
     }
     
@@ -99,7 +99,7 @@ public class GetUsersOfUser extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<List<NameAndPlateRegister>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Nu se poate vizualiza lista", Toast.LENGTH_LONG).show();
             }
         });
 

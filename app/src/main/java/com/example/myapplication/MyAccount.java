@@ -74,7 +74,7 @@ public class MyAccount extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -87,7 +87,7 @@ public class MyAccount extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             viewUsersNamesAndPlates();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
         }
     }
     private void viewUsersNamesAndPlates(){
@@ -100,7 +100,7 @@ public class MyAccount extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
 
             Gson gson = new GsonBuilder()
                     .setLenient()
@@ -114,10 +114,10 @@ public class MyAccount extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             updateNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Conexiune Nereusita", Toast.LENGTH_LONG).show();
         }
 
-        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Date Salvate", Toast.LENGTH_SHORT).show();
     }
 
     private void  updateNameAndPlateRegister() {
@@ -144,20 +144,20 @@ public class MyAccount extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String> call2, Throwable t) {
-                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Date Nemodificate", Toast.LENGTH_LONG).show();
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Persoana Negasita", Toast.LENGTH_LONG).show();
             }
         });
     }
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.100.23:8080/";
+            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -170,7 +170,7 @@ public class MyAccount extends AppCompatActivity {
 
             conectWithJava = retrofit.create(ConectWithJava.class);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
         }
     }
 
