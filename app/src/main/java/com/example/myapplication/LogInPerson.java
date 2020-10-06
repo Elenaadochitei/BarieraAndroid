@@ -109,13 +109,12 @@ public class LogInPerson extends AppCompatActivity {
 
     private void initializeRetrofit() {
         try {
-            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(ServerIp.BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
