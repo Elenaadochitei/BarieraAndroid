@@ -46,6 +46,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.example.myapplication.LogInPerson.ID;
 
 public class AddNewPerson extends AppCompatActivity {
 
@@ -146,9 +147,9 @@ public class AddNewPerson extends AppCompatActivity {
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
 
-        String id = sharedPreferences.getString("ID", "null");
+        String id = sharedPreferences.getString(ID,null);
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
 
@@ -197,7 +198,7 @@ public class AddNewPerson extends AppCompatActivity {
                     .build();
 
             conectWithJava = retrofit.create(ConectWithJava.class);
-            insertNameAndPlateRegister(sharedPreferences);
+            insertNameAndPlateRegister();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
         }
@@ -211,14 +212,15 @@ public class AddNewPerson extends AppCompatActivity {
     }
 
 
-    private void insertNameAndPlateRegister(SharedPreferences sharedPreferences) {
+    private void insertNameAndPlateRegister() {
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
-
-        String id = sharedPreferences.getString("ID", "null");
+        SharedPreferences sharedPreferences=getSharedPreferences(ID, MODE_PRIVATE);
+        String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
+        System.out.println(insertNewUser.getUserID());
         Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<NameAndPlateRegister>() {
