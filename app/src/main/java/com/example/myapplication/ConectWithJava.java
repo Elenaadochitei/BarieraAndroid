@@ -42,7 +42,7 @@ public interface ConectWithJava {
     Call<String> getID(@QueryMap HashMap<String, String> getIdFromMap);
 
     @GET(API_ROUTEH)
-    Call<List<Nume_Nr_Masina>> getNameAndPlateOfUser(@Path("id") String id);
+    Call<List<NameAndPlateRegister>> getNameAndPlateOfUser(@Path("id") String id);
 
 }
 
