@@ -49,7 +49,7 @@ public class GetUsersOfUser extends AppCompatActivity {
         ressultat = findViewById(R.id.ressultat);
         label = findViewById(R.id.label);
         initializeRetrofit();
-        Toast.makeText(this, "Clik Item To Update", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selecteaza pentru a modifica", Toast.LENGTH_SHORT).show();
         ressultat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private static final String TAG = "Clik!";
 
@@ -78,7 +78,7 @@ public class GetUsersOfUser extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             viewMyList();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
         }
     }
     
@@ -86,19 +86,19 @@ public class GetUsersOfUser extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
         String test= sharedPreferences.getString(ID, null);
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, R.id.label, guests);
-        Call<List<Nume_Nr_Masina>> stringCall = conectWithJava.getNameAndPlateOfUser(test);
-        stringCall.enqueue(new Callback<List<Nume_Nr_Masina>>() {
+        Call<List<NameAndPlateRegister>> stringCall = conectWithJava.getNameAndPlateOfUser(test);
+        stringCall.enqueue(new Callback<List<NameAndPlateRegister>>() {
             @Override
-            public void onResponse(Call<List<Nume_Nr_Masina>> call, Response<List<Nume_Nr_Masina>> response) {
+            public void onResponse(Call<List<NameAndPlateRegister>> call, Response<List<NameAndPlateRegister>> response) {
                 assert response.body() != null;
-                for (Nume_Nr_Masina a : response.body()) {
-                    guests.add(a.getNume() + " - " + a.getNrMasina());
+                for (NameAndPlateRegister a : response.body()) {
+                    guests.add(a.getName() + " - " + a.getPlateRegister());
                 }
                 ressultat.setAdapter(adapter);
             }
             @Override
-            public void onFailure(Call<List<Nume_Nr_Masina>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+            public void onFailure(Call<List<NameAndPlateRegister>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Nu se poate vizualiza lista", Toast.LENGTH_LONG).show();
             }
         });
 

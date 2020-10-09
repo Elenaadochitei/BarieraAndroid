@@ -205,7 +205,7 @@ public class AddNewPerson extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             insertNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG).show();
         }
 
         HashSet<String> nameAndPlateRegister = new HashSet<>();
@@ -238,7 +238,7 @@ public class AddNewPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
     }
