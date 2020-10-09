@@ -151,9 +151,10 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
 
-        String id = sharedPreferences.getString(ID, null);
+        String id = sharedPreferences.getString(ID,null);
+
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
 
@@ -217,16 +218,20 @@ public class AddNewPerson extends AppCompatActivity {
         Toast.makeText(this, "Date salvate", Toast.LENGTH_SHORT).show();
     }
 
+
     private void insertNameAndPlateRegister() {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
 
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
 
+        SharedPreferences sharedPreferences=getSharedPreferences(ID, MODE_PRIVATE);
         String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
+        System.out.println(insertNewUser.getUserID());
 
         Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
 
