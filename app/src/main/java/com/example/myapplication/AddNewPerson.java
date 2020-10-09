@@ -31,6 +31,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
@@ -46,6 +48,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.example.myapplication.LogInPerson.ID;
 
 public class AddNewPerson extends AppCompatActivity {
 
@@ -144,11 +147,13 @@ public class AddNewPerson extends AppCompatActivity {
         ApiConfig getResponse = AppConfig.getRetrofit().create(ApiConfig.class);
 
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
+
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
+
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
-        String id = sharedPreferences.getString("ID", "null");
+        String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
 
@@ -186,21 +191,23 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http:///192.168.0.105:8080/";
             Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
                     .setLenient()
                     .create();
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(ServerIp.BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
             conectWithJava = retrofit.create(ConectWithJava.class);
-            insertNameAndPlateRegister(sharedPreferences);
+            insertNameAndPlateRegister();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG).show();
         }
+
         HashSet<String> nameAndPlateRegister = new HashSet<>();
         nameAndPlateRegister.add(plateRegister.getText().toString());
         nameAndPlateRegister.add(userName.getText().toString());
@@ -210,15 +217,17 @@ public class AddNewPerson extends AppCompatActivity {
         Toast.makeText(this, "Date salvate", Toast.LENGTH_SHORT).show();
     }
 
-
-    private void insertNameAndPlateRegister(SharedPreferences sharedPreferences) {
+    private void insertNameAndPlateRegister() {
+        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
+
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
 
-        String id = sharedPreferences.getString("ID", "null");
+        String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
+
         Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<NameAndPlateRegister>() {
@@ -232,6 +241,11 @@ public class AddNewPerson extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private Date getDate(LocalDate date) {
+        return new Date(date.getYear() - 1900, date.getMonthValue() -1,
+                date.getDayOfMonth());
     }
 
 
