@@ -32,17 +32,6 @@
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Vezi istoric" />
 
-    <EditText
-        android:id="@+id/newPlateRegister"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="395dp"
-        android:hint="Introduceti noul numar"
-        android:textSize="25dp" />
 
     <View
         android:id="@+id/view3"
@@ -103,6 +92,17 @@
         android:layout_marginBottom="526dp"
         android:hint="Introduceti numele"
         android:textSize="25dp" />
+    <EditText
+        android:id="@+id/newPlateRegister"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="395dp"
+        android:hint="Introduceti noul numar"
+        android:textSize="25dp" />
 
     <View
         android:id="@+id/view1"
@@ -110,10 +110,11 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-4dp"
-        android:layout_marginBottom="395dp"
+        android:layout_marginEnd="-7dp"
+        android:layout_marginBottom="404dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
+
 
     <View
         android:id="@+id/view2"
@@ -121,11 +122,10 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="462dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginBottom="465dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
-
 
     <TextView
         android:id="@+id/textView5"
