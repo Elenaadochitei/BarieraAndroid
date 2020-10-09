@@ -31,6 +31,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
@@ -145,11 +147,14 @@ public class AddNewPerson extends AppCompatActivity {
         ApiConfig getResponse = AppConfig.getRetrofit().create(ApiConfig.class);
 
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
+
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
+
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
 
         String id = sharedPreferences.getString(ID,null);
+
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
 
@@ -187,12 +192,13 @@ public class AddNewPerson extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            String BASE_URL = "http://192.168.100.37:8080/";
             Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
                     .setLenient()
                     .create();
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(ServerIp.BASE_URL)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
@@ -200,8 +206,9 @@ public class AddNewPerson extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             insertNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG).show();
         }
+
         HashSet<String> nameAndPlateRegister = new HashSet<>();
         nameAndPlateRegister.add(plateRegister.getText().toString());
         nameAndPlateRegister.add(userName.getText().toString());
@@ -213,14 +220,19 @@ public class AddNewPerson extends AppCompatActivity {
 
 
     private void insertNameAndPlateRegister() {
+        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
+
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
+
         SharedPreferences sharedPreferences=getSharedPreferences(ID, MODE_PRIVATE);
         String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
         System.out.println(insertNewUser.getUserID());
+
         Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<NameAndPlateRegister>() {
@@ -231,9 +243,14 @@ public class AddNewPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private Date getDate(LocalDate date) {
+        return new Date(date.getYear() - 1900, date.getMonthValue() -1,
+                date.getDayOfMonth());
     }
 
 
