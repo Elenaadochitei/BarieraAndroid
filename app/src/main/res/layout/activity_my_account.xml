@@ -44,31 +44,6 @@
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
 
-
-    <ProgressBar
-        android:id="@+id/progressBar6"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="235dp"
-        android:layout_height="236dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="4dp" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="239dp"
-        android:layout_marginBottom="30dp"
-        android:background="@null"
-        android:checked="true"
-        android:text="Notificari:"
-        android:textColor="#0C0C0C"
-        android:textOff="OFF"
-        android:textOn="ON"
-        android:textSize="25dp" />
-
     <EditText
         android:id="@+id/plateRegister"
         android:layout_width="match_parent"
