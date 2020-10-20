@@ -32,17 +32,17 @@
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Vezi istoric" />
 
+
     <View
         android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="529dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="527dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
-
 
     <ProgressBar
         android:id="@+id/progressBar6"
@@ -71,37 +71,38 @@
     <EditText
         android:id="@+id/plateRegister"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="75dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="-2dp"
-        android:layout_marginBottom="458dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginBottom="451dp"
         android:hint="Introduceti numarul masinii"
-        android:textSize="25dp" />
+        android:textSize="28dp" />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="-1dp"
-        android:layout_marginBottom="526dp"
-        android:hint="Introduceti numele"
-        android:textSize="25dp" />
-    <EditText
-        android:id="@+id/newPlateRegister"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="74dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="395dp"
+        android:layout_marginBottom="523dp"
+        android:hint="Introduceti numele"
+        android:textSize="28dp" />
+
+
+    <EditText
+        android:id="@+id/newPlateRegister"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="393dp"
         android:hint="Introduceti noul numar"
-        android:textSize="25dp" />
+        android:textSize="28dp" />
 
     <View
         android:id="@+id/view1"
@@ -109,11 +110,10 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-7dp"
-        android:layout_marginBottom="404dp"
+        android:layout_marginEnd="-5dp"
+        android:layout_marginBottom="397dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
-
 
     <View
         android:id="@+id/view2"
@@ -121,8 +121,8 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-4dp"
-        android:layout_marginBottom="465dp"
+        android:layout_marginEnd="-8dp"
+        android:layout_marginBottom="459dp"
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
 
