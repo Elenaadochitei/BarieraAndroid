@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MyAccount">
 
+
     <ImageView
         android:id="@+id/backgroundImage1"
         android:layout_width="match_parent"
@@ -21,17 +22,15 @@
 
     <Button
         android:id="@+id/editButton2"
-        android:layout_width="177dp"
-        android:layout_height="87dp"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="129dp"
-        android:layout_marginBottom="177dp"
-        android:background="@android:color/transparent"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="282dp"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Vezi istoric" />
-
 
     <View
         android:id="@+id/view3"
@@ -142,14 +141,13 @@
 
     <Button
         android:id="@+id/editButton"
-        android:layout_width="177dp"
-        android:layout_height="87dp"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="131dp"
-        android:layout_marginBottom="298dp"
-        android:background="@android:color/transparent"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="338dp"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Edit/Save" />
 
