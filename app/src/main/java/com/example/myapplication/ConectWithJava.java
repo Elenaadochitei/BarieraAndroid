@@ -20,9 +20,10 @@ public interface ConectWithJava {
 
     String API_ROUTEE = "updateData/{id}";
 
-    String API_ROUTEEE = "deleteData/{id}";
+    String API_ROUTEEE = "deletePlateRegister/{id}";
 
     String API_ROUTEEEE = "getUserByNameAndPlate";
+
     String API_ROUTEH = "getNameAndPlateOfUser/{id}";
 
     @Headers({
