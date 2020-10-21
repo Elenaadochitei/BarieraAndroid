@@ -26,6 +26,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp" />
 
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="700dp"
+        android:layout_marginBottom="529dp"
         android:background="#E30B0B"
         tools:ignore="MissingConstraints" />
 
@@ -43,35 +44,33 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="600dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginBottom="458dp"
         android:background="#E30B0B"
         tools:ignore="MissingConstraints" />
 
-
     <EditText
         android:id="@+id/plate_register"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="700dp"
+        android:layout_marginEnd="-4dp"
+        android:layout_marginBottom="451dp"
         android:hint="Numar masina"
         android:textSize="28sp" />
 
-
     <EditText
         android:id="@+id/name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="600dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="524dp"
         android:hint="Nume persoana"
         android:textSize="28sp" />
-
 
     <Button
         android:id="@+id/save_button"
@@ -79,11 +78,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="172dp"
-        android:layout_marginBottom="450dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginBottom="285dp"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Salveaza" />
-
 
     <Button
         android:id="@+id/openGallery"
@@ -91,8 +89,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="500dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginBottom="343dp"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Adauga imagine autoturism" />
 
@@ -102,8 +100,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="185dp"
-        android:layout_marginBottom="555dp"
+        android:layout_marginEnd="168dp"
+        android:layout_marginBottom="398dp"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Vizitator" />
 
