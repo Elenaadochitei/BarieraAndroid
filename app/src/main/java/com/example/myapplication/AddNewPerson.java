@@ -77,6 +77,13 @@ public class AddNewPerson extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_add_new_person);
 
+        selectedImage = (ImageView) findViewById(R.id.selectedImage);
+        plateRegister = findViewById(R.id.plate_register);
+        userName = findViewById(R.id.name);
+        saveButton = findViewById(R.id.save_button);
+        defaultText = findViewById(R.id.defaulText);
+        checkBox = (CheckBox) findViewById(R.id.checkBoxGuest);
+
         Button openGallery = (Button) findViewById(R.id.openGallery);
 
         openGallery.setOnClickListener(new View.OnClickListener() {
@@ -88,19 +95,17 @@ public class AddNewPerson extends AppCompatActivity {
             }
         });
 
-        plateRegister = findViewById(R.id.plate_register);
-        userName = findViewById(R.id.name);
-        saveButton = findViewById(R.id.save_button);
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
+                checkBox.setChecked(false);
+                plateRegister.setText("");
+                userName.setText("");
+                defaultText.setText("");
             }
         });
 
-        defaultText = findViewById(R.id.defaulText);
-        checkBox = (CheckBox) findViewById(R.id.checkBoxGuest);
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,9 +156,10 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
 
-        String id = sharedPreferences.getString(ID, null);
+        String id = sharedPreferences.getString(ID,null);
+
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
 
@@ -217,8 +223,10 @@ public class AddNewPerson extends AppCompatActivity {
         Toast.makeText(this, "Date salvate", Toast.LENGTH_SHORT).show();
     }
 
+
     private void insertNameAndPlateRegister() {
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
 
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
@@ -227,13 +235,14 @@ public class AddNewPerson extends AppCompatActivity {
 
         String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
+        System.out.println(insertNewUser.getUserID());
 
         Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
 
         call.enqueue(new Callback<NameAndPlateRegister>() {
             @Override
             public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
-                plateRegister.setText(response.body().getPlateRegister());
+                //plateRegister.setText(response.body().getPlateRegister());
             }
 
             @Override

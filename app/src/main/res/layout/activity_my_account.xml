@@ -44,6 +44,7 @@
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
 
+
     <ProgressBar
         android:id="@+id/progressBar6"
         style="?android:attr/progressBarStyle"
@@ -67,6 +68,7 @@
         android:textOff="OFF"
         android:textOn="ON"
         android:textSize="25dp" />
+
 
     <EditText
         android:id="@+id/plateRegister"

@@ -56,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
-                    case R.id.account:
-                        Toast.makeText(MainActivity.this, "Contul meu", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.settings:
-                        Toast.makeText(MainActivity.this, "Setari", Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.log_out_button:
                         Toast.makeText(MainActivity.this, "V-ati deconectat de la aplicatie!", Toast.LENGTH_SHORT).show();
                         sp.edit().putBoolean("logged", false).apply();
