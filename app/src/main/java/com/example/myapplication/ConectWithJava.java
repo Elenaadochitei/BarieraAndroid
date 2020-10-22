@@ -22,7 +22,7 @@ public interface ConectWithJava {
 
     String API_ROUTEEE = "deletePlateRegister/{id}";
 
-    String API_ROUTEEEE = "getUserByNameAndPlate";
+    String API_ROUTEEEE = "getID";
 
     String API_ROUTEH = "getNameAndPlateOfUser/{id}";
 
