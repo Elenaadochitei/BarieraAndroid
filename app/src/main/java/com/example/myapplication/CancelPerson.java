@@ -101,9 +101,9 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println(response.body());
                 if (response.body().equals("Product does not exist...")) {
-                    userName.setText("Reintroduceti numele");
-                    plateRegister.setText("Reintroduceti numarul masinii");
-                    saveButton.setText("Date incorecte");
+                    userName.setText(" ");
+                    plateRegister.setText(" ");
+                    Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceti!", Toast.LENGTH_LONG).show();
                 }
             }
 
