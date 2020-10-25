@@ -58,14 +58,12 @@ public class MyAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveData();
-
             }
         });
         editButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewHistory();
-
             }
         });
     }
@@ -86,7 +84,7 @@ public class MyAccount extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             viewUsersNamesAndPlates();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune nereusita!", Toast.LENGTH_LONG).show();
         }
     }
     private void viewUsersNamesAndPlates(){
@@ -111,17 +109,18 @@ public class MyAccount extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             updateNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),"Conexiune Nereusita", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Conexiune nereusita", Toast.LENGTH_LONG).show();
         }
 
-        Toast.makeText(this, "Date Salvate", Toast.LENGTH_SHORT).show();
     }
 
     private void  updateNameAndPlateRegister() {
         HashMap<String, String> updatePlate = new HashMap<>();
         updatePlate.put("name", name.getText().toString());
         updatePlate.put("plateRegister", plateRegister.getText().toString());
+
         Call<String> call = conectWithJava.getID(updatePlate);
+
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -131,24 +130,29 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
                         System.out.println(response.body());
-                        if (response.body().equals("Product does not exist...")) {
-                            name.setText("Reintrocuceti numele");
-                            plateRegister.setText("Reintroduceti numarul masinii");
-                            newPlateRegister.setText("Reintroduceti noul numar");
-                            editButton.setText("Date incorecte");
+                        if (response.body()==null) {
+                            name.setText("");
+                            plateRegister.setText("");
+                            newPlateRegister.setText("");
+                            Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
+                                    "Reintroduceti!", Toast.LENGTH_LONG).show();
+                        }else{
+                            name.setText("");
+                            plateRegister.setText("");
+                            newPlateRegister.setText("");
+                            Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<String> call2, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Date Nemodificate", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Persoana Negasita", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -166,8 +170,7 @@ public class MyAccount extends AppCompatActivity {
 
             conectWithJava = retrofit.create(ConectWithJava.class);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune nereusita!", Toast.LENGTH_LONG).show();
         }
     }
-
 }
