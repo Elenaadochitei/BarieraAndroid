@@ -123,12 +123,13 @@ public class MyAccount extends AppCompatActivity {
         HashMap<String, String> updatePlate = new HashMap<>();
         updatePlate.put("name", name.getText().toString());
         updatePlate.put("plateRegister", plateRegister.getText().toString());
-        ValidateNewPlateRegister(updatePlate);
         Call<String> call = conectWithJava.getID(updatePlate);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
+                ValidateNewPlateRegister(updatePlate);
+
                 call2.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
