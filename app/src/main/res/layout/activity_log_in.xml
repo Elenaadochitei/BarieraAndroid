@@ -83,21 +83,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="171dp"
         android:layout_marginBottom="329dp"
-        android:backgroundTint="@android:color/primary_text_dark"
-        android:hint="LogIn"
-        tools:ignore="MissingConstraints"
+        android:text="LogIn"
+        android:backgroundTint="@android:color/primary_text_dark_nodisable"
         tools:layout_editor_absoluteX="172dp"
         tools:layout_editor_absoluteY="516dp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="207dp"
-        android:layout_height="139dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="108dp"
-        android:layout_marginBottom="575dp"
-        app:srcCompat="@drawable/person" />
 
 
 </RelativeLayout>
