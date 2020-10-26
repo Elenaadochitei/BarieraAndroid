@@ -78,6 +78,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="-4dp"
         android:layout_marginBottom="451dp"
+        android:textStyle="italic"
         android:hint="Introduceti numarul masinii"
         android:textSize="28dp" />
 
@@ -90,6 +91,7 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="523dp"
+        android:textStyle="italic"
         android:hint="Introduceti numele"
         android:textSize="28dp" />
 
@@ -103,6 +105,7 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="393dp"
+        android:textStyle="italic"
         android:hint="Introduceti noul numar"
         android:textSize="28dp" />
 
