@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/red"
+        android:src="@drawable/rasarit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -26,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="453dp"
-        android:background="#070707"
+        android:background="#040404"
         tools:ignore="MissingConstraints" />
 
     <View
@@ -37,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="525dp"
-        android:background="#070707"
+        android:background="#040404"
         tools:ignore="MissingConstraints" />
 
 
@@ -51,6 +51,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="524dp"
         android:hint="Nume persoana"
+        android:textColorHint="#040404"
         android:textSize="28dp" />
 
     <EditText
@@ -62,6 +63,7 @@
         android:layout_marginEnd="-4dp"
         android:layout_marginBottom="451dp"
         android:hint="Numar masina"
+        android:textColorHint="#040404"
         android:textSize="28sp" />
 
     <Button

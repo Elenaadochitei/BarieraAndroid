@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".MyAccount">
 
-
     <ImageView
         android:id="@+id/backgroundImage1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/blue"
+        android:src="@drawable/rasarit"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,32 +43,6 @@
         android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
 
-
-    <ProgressBar
-        android:id="@+id/progressBar6"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="235dp"
-        android:layout_height="236dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="4dp" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="239dp"
-        android:layout_marginBottom="30dp"
-        android:background="@null"
-        android:checked="true"
-        android:text="Notificari:"
-        android:textColor="#0C0C0C"
-        android:textOff="OFF"
-        android:textOn="ON"
-        android:textSize="25dp" />
-
-
     <EditText
         android:id="@+id/plateRegister"
         android:layout_width="match_parent"
@@ -79,7 +52,8 @@
         android:layout_marginEnd="-4dp"
         android:layout_marginBottom="451dp"
         android:hint="Introduceti numarul masinii"
-        android:textSize="28dp" />
+        android:textColorHint="#040404"
+        android:textSize="25dp" />
 
     <EditText
         android:id="@+id/name"
@@ -91,20 +65,22 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="523dp"
         android:hint="Introduceti numele"
-        android:textSize="28dp" />
+        android:textColorHint="#040404"
+        android:textSize="25dp" />
 
 
     <EditText
         android:id="@+id/newPlateRegister"
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="68dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="393dp"
         android:hint="Introduceti noul numar"
-        android:textSize="28dp" />
+        android:textColorHint="#040404"
+        android:textSize="25dp" />
 
     <View
         android:id="@+id/view1"
@@ -112,10 +88,11 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:background="#040404"
         android:layout_marginEnd="-5dp"
         android:layout_marginBottom="397dp"
-        android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
+
 
     <View
         android:id="@+id/view2"
@@ -123,9 +100,9 @@
         android:layout_height="5dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:background="#040404"
         android:layout_marginEnd="-8dp"
         android:layout_marginBottom="459dp"
-        android:background="#0C0C0C"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -138,7 +115,7 @@
         android:layout_marginBottom="681dp"
         android:background="@null"
         android:text="Bine ai venit!"
-        android:textColor="#0C0C0C"
+        android:textColor="#040404"
         android:textSize="25dp" />
 
     <Button
