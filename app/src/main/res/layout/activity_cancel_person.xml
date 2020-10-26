@@ -40,18 +40,6 @@
         android:background="#070707"
         tools:ignore="MissingConstraints" />
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="600dp"
-        android:background="#050505"
-        tools:ignore="MissingConstraints" />
-
 
     <EditText
         android:id="@+id/name"
@@ -78,13 +66,13 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@android:dimen/notification_large_icon_height"
         android:layout_marginTop="@android:dimen/notification_large_icon_height"
-        android:layout_marginEnd="162dp"
+        android:layout_marginEnd="155dp"
         android:layout_marginBottom="383dp"
         android:backgroundTint="@android:color/primary_text_dark_nodisable"
         android:text="Salveaza" />

@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,7 +79,7 @@ public class CancelPerson extends AppCompatActivity {
         HashMap<String, String> deleteUsers = new HashMap<>();
         deleteUsers.put("name", userName.getText().toString());
         deleteUsers.put("plateRegister", plateRegister.getText().toString());
-
+        ValidateNamwAndPlateRegister(deleteUsers);
         Call<String> call = conectWithJava.getID(deleteUsers);
 
         call.enqueue(new Callback<String>() {
@@ -101,9 +102,9 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 System.out.println(response.body());
                 if (response.body().equals("Product does not exist...")) {
-                    userName.setText("Reintroduceti numele");
-                    plateRegister.setText("Reintroduceti numarul masinii");
-                    saveButton.setText("Date incorecte");
+                    userName.setText(" ");
+                    plateRegister.setText(" ");
+                    Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceti!", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -112,5 +113,14 @@ public class CancelPerson extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Nu s-a gasit persoana", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void ValidateNamwAndPlateRegister(HashMap<String, String> deleteUsers) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
+        boolean matcher1 = pattern.matcher(Objects.requireNonNull(deleteUsers.get("name"))).matches();
+        boolean matcher2 = pattern.matcher(Objects.requireNonNull(deleteUsers.get("plateRegister"))).matches();
+        if (!matcher1 || !matcher2) {
+            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
+        }
     }
 }

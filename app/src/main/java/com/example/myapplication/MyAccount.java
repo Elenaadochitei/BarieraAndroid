@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,7 +89,8 @@ public class MyAccount extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Conexiune nereusita!", Toast.LENGTH_LONG).show();
         }
     }
-    private void viewUsersNamesAndPlates(){
+
+    private void viewUsersNamesAndPlates() {
         initializeRetrofit();
         Intent intent = new Intent(this, GetUsersOfUser.class);
         startActivity(intent);
@@ -110,11 +113,10 @@ public class MyAccount extends AppCompatActivity {
             updateNameAndPlateRegister();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),"Conexiune nereusita", Toast.LENGTH_LONG).show();
-        }
 
     }
 
-    private void  updateNameAndPlateRegister() {
+    private void updateNameAndPlateRegister() {
         HashMap<String, String> updatePlate = new HashMap<>();
         updatePlate.put("name", name.getText().toString());
         updatePlate.put("plateRegister", plateRegister.getText().toString());
@@ -125,7 +127,8 @@ public class MyAccount extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
-                updatePlate.put("plateRegister", newPlateRegister.getText().toString());
+                ValidateNewPlateRegister(updatePlate);
+
                 call2.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
@@ -140,7 +143,7 @@ public class MyAccount extends AppCompatActivity {
                             name.setText("");
                             plateRegister.setText("");
                             newPlateRegister.setText("");
-                            Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();  
                         }
                     }
                     @Override
@@ -156,6 +159,7 @@ public class MyAccount extends AppCompatActivity {
             }
         });
     }
+
     private void initializeRetrofit() {
         try {
             Gson gson = new GsonBuilder()
@@ -171,6 +175,18 @@ public class MyAccount extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Conexiune nereusita!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void ValidateNewPlateRegister(HashMap<String, String> updatePlate) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
+        boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText())).matches();
+        if (!matcher) {
+            Toast.makeText(getApplicationContext(), "Format gresit!", Toast.LENGTH_LONG).show();
+            updatePlate.put("plateRegister", plateRegister.getText().toString());
+        } else {
+            updatePlate.put("plateRegister", newPlateRegister.getText().toString());
+            Toast.makeText(getApplicationContext(), "Modificare efectuata!", Toast.LENGTH_LONG).show();
         }
     }
 }
