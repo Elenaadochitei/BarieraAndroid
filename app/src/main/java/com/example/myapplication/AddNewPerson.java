@@ -34,7 +34,10 @@ import java.io.File;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -220,7 +223,7 @@ public class AddNewPerson extends AppCompatActivity {
 
         editor.putStringSet(TEXT, nameAndPlateRegister);
         editor.apply();
-        Toast.makeText(this, "Date salvate", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -231,6 +234,7 @@ public class AddNewPerson extends AppCompatActivity {
 
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
+        ValidateNameAndPlateRegister(insertNewUser);
         insertNewUser.setExpirationDate(expirationDate);
 
         String id = sharedPreferences.getString(ID, null);
@@ -242,12 +246,12 @@ public class AddNewPerson extends AppCompatActivity {
         call.enqueue(new Callback<NameAndPlateRegister>() {
             @Override
             public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
-                //plateRegister.setText(response.body().getPlateRegister());
+                Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
+           
             }
         });
     }
@@ -352,6 +356,14 @@ public class AddNewPerson extends AppCompatActivity {
         });
         alertDialog1 = builder.create();
         alertDialog1.show();
+    }
+    private void ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
+        boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
+        boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
+        if (!matcher1 || !matcher2) {
+            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
+        }
     }
 }
 
