@@ -10,36 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/red"
+        android:src="@drawable/rasaritt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="453dp"
-        android:background="#070707"
-        tools:ignore="MissingConstraints" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="525dp"
-        android:background="#070707"
-        tools:ignore="MissingConstraints" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/name"
@@ -51,18 +26,20 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="524dp"
         android:hint="Nume persoana"
-        android:textSize="28dp" />
+        android:textSize="28dp"
+        android:background="#A1FFFFFF"/>
 
     <EditText
         android:id="@+id/plate_register"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="74dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-4dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="451dp"
         android:hint="Numar masina"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        android:background="#A1FFFFFF"/>
 
     <Button
         android:id="@+id/save_button"
@@ -70,12 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@android:dimen/notification_large_icon_height"
-        android:layout_marginTop="@android:dimen/notification_large_icon_height"
-        android:layout_marginEnd="155dp"
-        android:layout_marginBottom="383dp"
-        android:backgroundTint="@android:color/primary_text_dark_nodisable"
+        android:layout_marginEnd="167dp"
+        android:layout_marginBottom="386dp"
+        android:background="@drawable/roundedbutton"
         android:text="Salveaza" />
-
 
 </RelativeLayout>

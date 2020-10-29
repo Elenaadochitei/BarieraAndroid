@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:left="5dp" android:top="5dp">  <!-- shadow effect -->
+        <shape>
+            <corners android:radius="10dp" />
+            <solid android:color="#CEF4B66F" />
+        </shape>
+    </item>
+
+    <item android:bottom="3dp" android:right="3dp">  <!-- Button Shape -->
+        <shape android:shape="rectangle">
+            <solid android:color="#F6F4F4"/>
+            <corners android:radius="10dp" />
+
+            <padding android:left="10dp"
+                android:right="10dp"/>
+            <stroke android:width="3px"
+                android:color="#CEF4B66F" />
+        </shape>
+    </item>
+
+</layer-list>

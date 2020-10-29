@@ -12,42 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/orange"
+        android:src="@drawable/rasaritt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="16dp" />
-
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="529dp"
-        android:background="#E30B0B"
-        tools:ignore="MissingConstraints" />
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-1dp"
-        android:layout_marginBottom="458dp"
-        android:background="#E30B0B"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/plate_register"
@@ -55,10 +29,11 @@
         android:layout_height="75dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-4dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="451dp"
         android:hint="Numar masina"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        android:background="#A1FFFFFF"/>
 
     <EditText
         android:id="@+id/name"
@@ -68,7 +43,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="524dp"
+        android:layout_marginBottom="526dp"
+        android:background="#A1FFFFFF"
         android:hint="Nume persoana"
         android:textSize="28sp" />
 
@@ -78,9 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="163dp"
-        android:layout_marginBottom="285dp"
-        android:backgroundTint="@android:color/primary_text_dark_nodisable"
+        android:layout_marginEnd="171dp"
+        android:layout_marginBottom="279dp"
+        android:background="@drawable/roundedbutton"
         android:text="Salveaza" />
 
     <Button
@@ -90,20 +66,20 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="98dp"
-        android:layout_marginBottom="343dp"
-        android:backgroundTint="@android:color/primary_text_dark_nodisable"
+        android:layout_marginBottom="337dp"
+        android:background="@drawable/roundedbutton"
         android:text="Adauga imagine autoturism" />
 
     <CheckBox
         android:id="@+id/checkBoxGuest"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="168dp"
-        android:layout_marginBottom="398dp"
-        android:backgroundTint="@android:color/primary_text_dark_nodisable"
-        android:text="Vizitator" />
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="394dp"
+        android:background="@drawable/roundedbutton"
+        android:text="VIZITATOR" />
 
     <TextView
         android:id="@+id/defaulText"
@@ -111,7 +87,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:hint=""
-        android:textColor="#070707"
+        android:textColor="#040404"
         android:textSize="20dp" />
 
 </RelativeLayout>

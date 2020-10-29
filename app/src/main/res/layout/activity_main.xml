@@ -7,25 +7,20 @@
     android:background="@android:color/holo_green_dark">
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-
 
         <ImageView
             android:id="@+id/backgroundImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/barrier2"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="16dp"
+            android:src="@drawable/rasaritt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
@@ -37,13 +32,9 @@
             android:layout_marginBottom="635dp"
             android:text="Adauga persoana"
             android:textAlignment="center"
-            android:textColor="#3F1717"
-            android:textColorHighlight="#28808B"
+            android:textColor="#040404"
             android:textSize="15sp"
-            android:textStyle="normal|bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="36dp"
-            tools:layout_editor_absoluteY="53dp" />
+            android:textStyle="normal|bold" />
 
         <TextView
             android:layout_width="68dp"
@@ -54,14 +45,9 @@
             android:layout_marginBottom="635dp"
             android:text="Anulare persoana"
             android:textAlignment="center"
-            android:textColor="#3F1717"
-            android:textColorHighlight="#28808B"
+            android:textColor="#040404"
             android:textSize="15sp"
-            android:textStyle="normal|bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="167dp"
-            tools:layout_editor_absoluteY="54dp" />
-
+            android:textStyle="normal|bold" />
 
         <TextView
             android:layout_width="68dp"
@@ -72,13 +58,9 @@
             android:layout_marginBottom="635dp"
             android:text="Contul meu"
             android:textAlignment="center"
-            android:textColor="#3F1717"
-            android:textColorHighlight="#28808B"
+            android:textColor="#040404"
             android:textSize="15sp"
-            android:textStyle="normal|bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="298dp"
-            tools:layout_editor_absoluteY="53dp" />
+            android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/barrier"
@@ -89,12 +71,9 @@
             android:padding="0dp"
             android:text="Get out of MY WAY!"
             android:textAlignment="center"
-            android:textColor="#F4F1F1"
-            android:textColorHighlight="#28808B"
+            android:textColor="#040404"
             android:textSize="30sp"
-            android:textStyle="normal|bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-2dp" />
+            android:textStyle="normal|bold" />
 
         <View
             android:layout_width="match_parent"
@@ -103,8 +82,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="700dp"
-            android:background="#E30B0B"
-            tools:ignore="MissingConstraints" />
+            android:background="#040404" />
 
         <View
             android:layout_width="match_parent"
@@ -112,12 +90,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="530dp"
-            android:background="#E30B0B"
-            tools:ignore="MissingConstraints"
-
-            />
-
+            android:layout_marginBottom="550dp"
+            android:background="#040404" />
 
         <ImageButton
             android:id="@+id/add"
@@ -131,10 +105,7 @@
             android:background="@null"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:src="@drawable/add"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="36dp"
-            tools:layout_editor_absoluteY="98dp" />
+            android:src="@drawable/add" />
 
         <ImageButton
             android:id="@+id/cancel"
@@ -148,10 +119,7 @@
             android:background="@null"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:src="@drawable/cancel"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="167dp"
-            tools:layout_editor_absoluteY="98dp" />
+            android:src="@drawable/cancel" />
 
         <ImageButton
             android:id="@+id/admin"
@@ -165,12 +133,7 @@
             android:background="@null"
             android:padding="0dp"
             android:scaleType="fitXY"
-            android:src="@drawable/admin"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="297dp"
-            tools:layout_editor_absoluteY="97dp" />
-
-
+            android:src="@drawable/admin" />
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -181,7 +144,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_menu">
-
 
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

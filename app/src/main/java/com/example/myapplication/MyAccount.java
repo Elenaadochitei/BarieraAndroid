@@ -112,8 +112,9 @@ public class MyAccount extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             updateNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(),"Conexiune nereusita", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
 
+        }
     }
 
     private void updateNameAndPlateRegister() {
@@ -133,19 +134,20 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
                         System.out.println(response.body());
-                        if (response.body()==null) {
+                        if (response.body() == null) {
                             name.setText("");
                             plateRegister.setText("");
                             newPlateRegister.setText("");
                             Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
                                     "Reintroduceti!", Toast.LENGTH_LONG).show();
-                        }else{
+                        } else {
                             name.setText("");
                             plateRegister.setText("");
                             newPlateRegister.setText("");
-                            Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();  
+                            Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<String> call2, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG).show();

@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@drawable/lightleaks"
+    android:background="@drawable/rasaritt"
     tools:context=".GetUsersOfUser">
 
     <ListView
         android:id="@+id/ressultat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/lightleaks"/>
+        android:background="@drawable/rasaritt"/>
 
     <TextView
         android:id="@+id/label"
