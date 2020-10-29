@@ -31,6 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="451dp"
+        android:textStyle="italic"
         android:hint="Numar masina"
         android:textSize="28sp"
         android:background="#A1FFFFFF"/>
@@ -45,6 +46,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="526dp"
         android:background="#A1FFFFFF"
+        android:textStyle="italic"
         android:hint="Nume persoana"
         android:textSize="28sp" />
 
