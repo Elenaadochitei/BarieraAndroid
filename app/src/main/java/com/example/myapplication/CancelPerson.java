@@ -79,7 +79,7 @@ public class CancelPerson extends AppCompatActivity {
         HashMap<String, String> deleteUsers = new HashMap<>();
         deleteUsers.put("name", userName.getText().toString());
         deleteUsers.put("plateRegister", plateRegister.getText().toString());
-        ValidateNamwAndPlateRegister(deleteUsers);
+        ValidateNameAndPlateRegister(deleteUsers);
         Call<String> call = conectWithJava.getID(deleteUsers);
 
         call.enqueue(new Callback<String>() {
@@ -115,7 +115,7 @@ public class CancelPerson extends AppCompatActivity {
         });
     }
 
-    private void ValidateNamwAndPlateRegister(HashMap<String, String> deleteUsers) {
+    private void ValidateNameAndPlateRegister(HashMap<String, String> deleteUsers) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(deleteUsers.get("name"))).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(deleteUsers.get("plateRegister"))).matches();
