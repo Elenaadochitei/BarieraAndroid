@@ -70,7 +70,6 @@ public class AddNewPerson extends AppCompatActivity {
     CheckBox checkBox;
     LocalDateTime expirationDate;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,17 +97,6 @@ public class AddNewPerson extends AppCompatActivity {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-                checkBox.setChecked(false);
-                plateRegister.setText("");
-                userName.setText("");
-                defaultText.setText("");
-            }
-        });
-
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,6 +107,78 @@ public class AddNewPerson extends AppCompatActivity {
                     checkBox.setChecked(false);
                     defaultText.setText("");
                 }
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveData();
+                checkBox.setChecked(false);
+                plateRegister.setText("");
+                userName.setText("");
+                defaultText.setText("");
+            }
+        });
+    }
+
+    public void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        try {
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                    .setLenient()
+                    .create();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ServerIp.BASE_URL)
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            conectWithJava = retrofit.create(ConectWithJava.class);
+            insertNameAndPlateRegister();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG).show();
+        }
+
+        HashSet<String> nameAndPlateRegister = new HashSet<>();
+        nameAndPlateRegister.add(plateRegister.getText().toString());
+        nameAndPlateRegister.add(userName.getText().toString());
+
+        editor.putStringSet(TEXT, nameAndPlateRegister);
+        editor.apply();
+    }
+
+    private void insertNameAndPlateRegister() {
+        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+
+        NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
+
+        insertNewUser.setPlateRegister(plateRegister.getText().toString());
+        insertNewUser.setName(userName.getText().toString());
+        insertNewUser.setExpirationDate(expirationDate);
+
+        String id = sharedPreferences.getString(ID, null);
+        insertNewUser.setUserID(id);
+        System.out.println(insertNewUser.getUserID());
+
+        Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
+
+        call.enqueue(new Callback<NameAndPlateRegister>() {
+            @Override
+            public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
+                if (response.body().getPlateRegister()!=null) {
+                    Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -181,7 +241,6 @@ public class AddNewPerson extends AppCompatActivity {
                     Log.v("Response", serverResponse.toString());
                 }
             }
-
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 System.out.println("Fail");
@@ -196,71 +255,10 @@ public class AddNewPerson extends AppCompatActivity {
         return cursor.getString(idx);
     }
 
-    public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        try {
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
-                    .setLenient()
-                    .create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ServerIp.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            conectWithJava = retrofit.create(ConectWithJava.class);
-            insertNameAndPlateRegister();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG).show();
-        }
-
-        HashSet<String> nameAndPlateRegister = new HashSet<>();
-        nameAndPlateRegister.add(plateRegister.getText().toString());
-        nameAndPlateRegister.add(userName.getText().toString());
-
-        editor.putStringSet(TEXT, nameAndPlateRegister);
-        editor.apply();
-
-    }
-
-
-    private void insertNameAndPlateRegister() {
-        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
-
-        NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
-
-        insertNewUser.setPlateRegister(plateRegister.getText().toString());
-        insertNewUser.setName(userName.getText().toString());
-        ValidateNameAndPlateRegister(insertNewUser);
-        insertNewUser.setExpirationDate(expirationDate);
-
-        String id = sharedPreferences.getString(ID, null);
-        insertNewUser.setUserID(id);
-        System.out.println(insertNewUser.getUserID());
-
-        Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
-
-        call.enqueue(new Callback<NameAndPlateRegister>() {
-            @Override
-            public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
-                Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-           
-            }
-        });
-    }
-
     private Date getDate(LocalDate date) {
         return new Date(date.getYear() - 1900, date.getMonthValue() -1,
                 date.getDayOfMonth());
     }
-
 
     private boolean checkPermission() {
         return ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
@@ -312,7 +310,6 @@ public class AddNewPerson extends AppCompatActivity {
         }
     }
 
-
     public void createAlertDialogWithRadioButtonGroup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
@@ -325,7 +322,6 @@ public class AddNewPerson extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
 
         builder.setSingleChoiceItems(values, -1, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
