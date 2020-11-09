@@ -34,7 +34,10 @@ import java.io.File;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -349,6 +352,14 @@ public class AddNewPerson extends AppCompatActivity {
         });
         alertDialog1 = builder.create();
         alertDialog1.show();
+    }
+    private void ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
+        boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
+        boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
+        if (!matcher1 || !matcher2) {
+            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
+        }
     }
 }
 
