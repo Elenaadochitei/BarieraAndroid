@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton add = (ImageButton) findViewById(R.id.add);
         ImageButton cancel = (ImageButton) findViewById(R.id.cancel);
         ImageButton admin = (ImageButton) findViewById(R.id.admin);
+        ImageButton parking = (ImageButton) findViewById(R.id.parking);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openActivityMyAccount();
+            }
+        });
+        parking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityShareParking();
             }
         });
     }
@@ -112,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivityMyAccount() {
         Intent intent = new Intent(this, MyAccount.class);
+        startActivity(intent);
+    }
+    public void openActivityShareParking() {
+        Intent intent = new Intent(this, ShareParking.class);
         startActivity(intent);
     }
 

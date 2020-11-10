@@ -42,7 +42,6 @@ public class CancelPerson extends AppCompatActivity {
         setContentView(R.layout.activity_cancel_person);
 
         saveButton = (Button) findViewById(R.id.save_button);
-
         userName = (EditText) findViewById(R.id.name);
         plateRegister = (EditText) findViewById(R.id.plate_register);
 
@@ -65,7 +64,6 @@ public class CancelPerson extends AppCompatActivity {
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-
             conectWithJava = retrofit.create(ConectWithJava.class);
             deleteNameAndPlateRegister();
         } catch (Exception e) {

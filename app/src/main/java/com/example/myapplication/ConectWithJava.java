@@ -26,6 +26,8 @@ public interface ConectWithJava {
 
     String API_ROUTEH = "getNameAndPlateOfUser/{id}";
 
+    String API_ROUT = "shareParking";
+
     @Headers({
             "Content-type: application/json"
     })
@@ -44,6 +46,9 @@ public interface ConectWithJava {
 
     @GET(API_ROUTEH)
     Call<List<NameAndPlateRegister>> getNameAndPlateOfUser(@Path("id") String id);
+
+    @POST(API_ROUT)
+    Call<SharedParkingSpace> shareParking (@Body SharedParkingSpace sharedParkingSpace);
 
 }
 
