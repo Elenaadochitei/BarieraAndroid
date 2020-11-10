@@ -90,7 +90,7 @@ public class MyAccount extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
+                Call<String> call2 = conectWithJava.updateUser(token, response.body(), updatePlate);
                 ValidateNewPlateRegister(updatePlate);
                 if (!ValidateNewPlateRegister(updatePlate)) {
                     newPlateRegister.setText("");

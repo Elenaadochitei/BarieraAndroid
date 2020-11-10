@@ -165,11 +165,10 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setExpirationDate(expirationDate);
 
         String id = sharedPreferences.getString(LOGGED_USER_ID, null);
-        if(!ValidateNameAndPlateRegister(insertNewUser)){
+        if (!ValidateNameAndPlateRegister(insertNewUser)) {
             clearText();
             return;
         }
-        String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
         System.out.println(insertNewUser.getUserID());
 
@@ -375,6 +374,7 @@ public class AddNewPerson extends AppCompatActivity {
         }
         return (matcher1 && matcher2);
     }
+
     private void clearText() {
         userName.setText("");
         plateRegister.setText("");
