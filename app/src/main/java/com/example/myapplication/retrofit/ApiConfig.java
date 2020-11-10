@@ -1,4 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.retrofit;
+
+import com.example.myapplication.NameAndPlateRegister;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;

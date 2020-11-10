@@ -12,24 +12,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.myapplication.constants.SharedPreferencesConstants;
+import com.example.myapplication.model.LoginRequest;
+import com.example.myapplication.retrofit.ConectWithLogInJava;
+import com.example.myapplication.retrofit.RetrofitApi;
 
-import java.util.Base64;
+import org.apache.http.HttpStatus;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
 
 public class LogInPerson extends AppCompatActivity {
     private TextView userName;
     private TextView password;
     private Button logIn;
-    public static final String ID = "id Admin";
-    private ConectWithLogInJava conectWithLogInJavaJava;
     SharedPreferences sp;
 
     @Override
@@ -67,61 +66,37 @@ public class LogInPerson extends AppCompatActivity {
 
 
     public void checkNameAndPassword() {
-
-        initializeRetrofit();
-        String originalInput = userName.getText().toString();
-        String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-        String originalInput1 = password.getText().toString();
-        String encodedString1 = Base64.getEncoder().encodeToString(originalInput1.getBytes());
-
-        Call<LoginInfo> call = conectWithLogInJavaJava.checkNameAndPassword(encodedString, encodedString1);
-
-        call.enqueue(new Callback<LoginInfo>() {
-
+        ConectWithLogInJava connectWithLogInJava = RetrofitApi.getInstance().create(ConectWithLogInJava.class);
+        LoginRequest loginRequest = LoginRequest.builder().username(userName.getText().toString())
+                .password(password.getText().toString()).build();
+        Call<LoginResponse> call = connectWithLogInJava.checkNameAndPassword(loginRequest);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
-                LoginInfo log = response.body();
-
-                boolean isUserPresentInDb = log.userActive;
-
-                if (isUserPresentInDb) {
-                    sp.edit().putBoolean("logged", true).apply();
-                    openMainActivity();
-                    SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(ID, log.id);
-                    System.out.println("EDITOR " + sharedPreferences.getString(ID, null));
-                    sharedPreferences.getString(ID, null);
-                    editor.apply();
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Logare Nereusita ", Toast.LENGTH_SHORT).show();
-                    sp.edit().putBoolean("logged", false).apply();
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.code() == HttpStatus.SC_OK) {
+                    LoginResponse responseBody = response.body();
+                    String loggedUserId = responseBody.getId();
+                    if (loggedUserId != null && !loggedUserId.isEmpty()) {
+                        sp.edit().putBoolean("logged", true).apply();
+                        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(SharedPreferencesConstants.LOGGED_USER_ID, loggedUserId);
+                        editor.putString(SharedPreferencesConstants.LOGGED_USER_TOKEN, "Bearer " + responseBody.getAccessToken());
+                        editor.apply();
+                        openMainActivity();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Logare Nereusita ", Toast.LENGTH_SHORT).show();
+                        sp.edit().putBoolean("logged", false).apply();
+                    }
+                } else if (HttpStatus.SC_UNAUTHORIZED == response.code()) {
+                    Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginInfo> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Logare Nereusita", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void initializeRetrofit() {
-        try {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ServerIp.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            conectWithLogInJavaJava = retrofit.create(ConectWithLogInJava.class);
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
-        }
     }
 }

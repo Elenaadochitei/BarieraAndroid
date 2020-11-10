@@ -27,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.myapplication.retrofit.ApiConfig;
+import com.example.myapplication.retrofit.ConectWithJava;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -34,7 +36,6 @@ import java.io.File;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -51,7 +52,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static com.example.myapplication.LogInPerson.ID;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_ID;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
 
 public class AddNewPerson extends AppCompatActivity {
 
@@ -153,7 +156,7 @@ public class AddNewPerson extends AppCompatActivity {
     }
 
     private void insertNameAndPlateRegister() {
-        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
 
         NameAndPlateRegister insertNewUser = new NameAndPlateRegister();
 
@@ -161,24 +164,26 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
 
-        String id = sharedPreferences.getString(ID, null);
+        String id = sharedPreferences.getString(LOGGED_USER_ID, null);
         insertNewUser.setUserID(id);
         System.out.println(insertNewUser.getUserID());
 
-        Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(insertNewUser);
+        String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
+        Call<NameAndPlateRegister> call = conectWithJava.insertNewUser(token, insertNewUser);
 
         call.enqueue(new Callback<NameAndPlateRegister>() {
             @Override
             public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
-                if (response.body().getPlateRegister()!=null) {
+                if (response.body().getPlateRegister() != null) {
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -219,9 +224,9 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
 
-        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
 
-        String id = sharedPreferences.getString(ID,null);
+        String id = sharedPreferences.getString(LOGGED_USER_ID, null);
 
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
@@ -241,6 +246,7 @@ public class AddNewPerson extends AppCompatActivity {
                     Log.v("Response", serverResponse.toString());
                 }
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 System.out.println("Fail");
@@ -256,7 +262,7 @@ public class AddNewPerson extends AppCompatActivity {
     }
 
     private Date getDate(LocalDate date) {
-        return new Date(date.getYear() - 1900, date.getMonthValue() -1,
+        return new Date(date.getYear() - 1900, date.getMonthValue() - 1,
                 date.getDayOfMonth());
     }
 
@@ -353,6 +359,7 @@ public class AddNewPerson extends AppCompatActivity {
         alertDialog1 = builder.create();
         alertDialog1.show();
     }
+
     private void ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
