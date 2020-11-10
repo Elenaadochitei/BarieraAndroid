@@ -77,7 +77,6 @@ public class CancelPerson extends AppCompatActivity {
         HashMap<String, String> deleteUsers = new HashMap<>();
         deleteUsers.put("name", userName.getText().toString());
         deleteUsers.put("plateRegister", plateRegister.getText().toString());
-        ValidateNameAndPlateRegister(deleteUsers);
         Call<String> call = conectWithJava.getID(deleteUsers);
 
         call.enqueue(new Callback<String>() {
@@ -98,12 +97,11 @@ public class CancelPerson extends AppCompatActivity {
         stringCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                System.out.println(response.body());
-                if (response.body().equals("Product does not exist...")) {
-                    userName.setText(" ");
-                    plateRegister.setText(" ");
+                if (response.body() == null) {
+                    clearText();
                     Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceti!", Toast.LENGTH_LONG).show();
-                }
+                } else
+                    Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -113,12 +111,8 @@ public class CancelPerson extends AppCompatActivity {
         });
     }
 
-    private void ValidateNameAndPlateRegister(HashMap<String, String> deleteUsers) {
-        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
-        boolean matcher1 = pattern.matcher(Objects.requireNonNull(deleteUsers.get("name"))).matches();
-        boolean matcher2 = pattern.matcher(Objects.requireNonNull(deleteUsers.get("plateRegister"))).matches();
-        if (!matcher1 || !matcher2) {
-            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
-        }
+    private void clearText() {
+        userName.setText("");
+        plateRegister.setText("");
     }
 }

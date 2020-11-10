@@ -160,7 +160,10 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setPlateRegister(plateRegister.getText().toString());
         insertNewUser.setName(userName.getText().toString());
         insertNewUser.setExpirationDate(expirationDate);
-
+        if(!ValidateNameAndPlateRegister(insertNewUser)){
+            clearText();
+            return;
+        }
         String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
         System.out.println(insertNewUser.getUserID());
@@ -170,15 +173,17 @@ public class AddNewPerson extends AppCompatActivity {
         call.enqueue(new Callback<NameAndPlateRegister>() {
             @Override
             public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
-                if (response.body().getPlateRegister()!=null) {
+                if (response.body().getPlateRegister() != null) {
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Adaugare Nereusita", Toast.LENGTH_LONG).show();
+                clearText();
+                Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -221,7 +226,7 @@ public class AddNewPerson extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
 
-        String id = sharedPreferences.getString(ID,null);
+        String id = sharedPreferences.getString(ID, null);
 
         insertNewUser.setUserID(id);
         Call<String> call = getResponse.uploadFile(fileToUpload, insertNewUser);
@@ -241,6 +246,7 @@ public class AddNewPerson extends AppCompatActivity {
                     Log.v("Response", serverResponse.toString());
                 }
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 System.out.println("Fail");
@@ -256,7 +262,7 @@ public class AddNewPerson extends AppCompatActivity {
     }
 
     private Date getDate(LocalDate date) {
-        return new Date(date.getYear() - 1900, date.getMonthValue() -1,
+        return new Date(date.getYear() - 1900, date.getMonthValue() - 1,
                 date.getDayOfMonth());
     }
 
@@ -353,13 +359,19 @@ public class AddNewPerson extends AppCompatActivity {
         alertDialog1 = builder.create();
         alertDialog1.show();
     }
-    private void ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
+
+    private boolean ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
         if (!matcher1 || !matcher2) {
             Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
         }
+        return (matcher1 && matcher2);
+    }
+    private void clearText() {
+        userName.setText("");
+        plateRegister.setText("");
     }
 }
 
