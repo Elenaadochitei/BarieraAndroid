@@ -90,23 +90,20 @@ public class MyAccount extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Call<String> call2 = conectWithJava.updateUser(token, response.body(), updatePlate);
+                Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
                 ValidateNewPlateRegister(updatePlate);
-
+                if (!ValidateNewPlateRegister(updatePlate)) {
+                    newPlateRegister.setText("");
+                    return;
+                }
                 call2.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
-                        System.out.println(response.body());
                         if (response.body() == null) {
-                            name.setText("");
-                            plateRegister.setText("");
-                            newPlateRegister.setText("");
                             Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
                                     "Reintroduceti!", Toast.LENGTH_LONG).show();
                         } else {
-                            name.setText("");
-                            plateRegister.setText("");
-                            newPlateRegister.setText("");
+                            clearText();
                             Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -114,6 +111,8 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<String> call2, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG).show();
+                        clearText();
+
                     }
                 });
             }
@@ -126,15 +125,22 @@ public class MyAccount extends AppCompatActivity {
     }
 
 
-    private void ValidateNewPlateRegister(HashMap<String, String> updatePlate) {
+    private Boolean ValidateNewPlateRegister(HashMap<String, String> updatePlate) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
-        boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText())).matches();
+        boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText().toString())).matches();
         if (!matcher) {
-            Toast.makeText(getApplicationContext(), "Format gresit!", Toast.LENGTH_LONG).show();
             updatePlate.put("plateRegister", plateRegister.getText().toString());
+            Toast.makeText(getApplicationContext(), "Format gresit!\n                  " +
+                    "                                    Reintroduceti noul numar!", Toast.LENGTH_LONG).show();
         } else {
             updatePlate.put("plateRegister", newPlateRegister.getText().toString());
-            Toast.makeText(getApplicationContext(), "Modificare efectuata!", Toast.LENGTH_LONG).show();
         }
+        return matcher;
+    }
+
+    private void clearText() {
+        name.setText("");
+        plateRegister.setText("");
+        newPlateRegister.setText("");
     }
 }

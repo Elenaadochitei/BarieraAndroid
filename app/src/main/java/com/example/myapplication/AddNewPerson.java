@@ -165,6 +165,11 @@ public class AddNewPerson extends AppCompatActivity {
         insertNewUser.setExpirationDate(expirationDate);
 
         String id = sharedPreferences.getString(LOGGED_USER_ID, null);
+        if(!ValidateNameAndPlateRegister(insertNewUser)){
+            clearText();
+            return;
+        }
+        String id = sharedPreferences.getString(ID, null);
         insertNewUser.setUserID(id);
         System.out.println(insertNewUser.getUserID());
 
@@ -183,6 +188,7 @@ public class AddNewPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
+                clearText();
                 Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG).show();
             }
         });
@@ -360,13 +366,18 @@ public class AddNewPerson extends AppCompatActivity {
         alertDialog1.show();
     }
 
-    private void ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
+    private boolean ValidateNameAndPlateRegister(NameAndPlateRegister insert) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
         if (!matcher1 || !matcher2) {
             Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
         }
+        return (matcher1 && matcher2);
+    }
+    private void clearText() {
+        userName.setText("");
+        plateRegister.setText("");
     }
 }
 
