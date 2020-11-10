@@ -82,7 +82,7 @@ public class CancelPerson extends AppCompatActivity {
         HashMap<String, String> deleteUsers = new HashMap<>();
         deleteUsers.put("name", userName.getText().toString());
         deleteUsers.put("plateRegister", plateRegister.getText().toString());
-        ValidateNameAndPlateRegister(deleteUsers);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
         String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
