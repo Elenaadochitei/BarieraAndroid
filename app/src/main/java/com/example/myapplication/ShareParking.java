@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.retrofit.ConectWithJava;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,6 +24,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
 
 public class ShareParking extends AppCompatActivity {
 
@@ -122,8 +126,9 @@ public class ShareParking extends AppCompatActivity {
         sharedParkingSpace.setSpaceNumber(Integer.parseInt(spaceNumber.getText().toString()));
         sharedParkingSpace.setExpirationDate(startTimeAndDate.getText().toString());
         sharedParkingSpace.setStartDate(endTimeAndDate.getText().toString());
-
-        Call<SharedParkingSpace> call = conectWithJava.shareParking(sharedParkingSpace);
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
+        String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
+        Call<SharedParkingSpace> call = conectWithJava.shareParking(token, sharedParkingSpace);
 
         call.enqueue(new Callback<SharedParkingSpace>() {
             @Override

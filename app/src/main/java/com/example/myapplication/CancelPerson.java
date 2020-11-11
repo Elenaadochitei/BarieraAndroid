@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.retrofit.ConectWithJava;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,6 +26,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
 
 public class CancelPerson extends AppCompatActivity {
     private TextView plateRegister;
@@ -77,12 +82,17 @@ public class CancelPerson extends AppCompatActivity {
         HashMap<String, String> deleteUsers = new HashMap<>();
         deleteUsers.put("name", userName.getText().toString());
         deleteUsers.put("plateRegister", plateRegister.getText().toString());
-        Call<String> call = conectWithJava.getID(deleteUsers);
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
+        String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
+
+        Call<String> call = conectWithJava.getID(token, deleteUsers);
 
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                callDeleteById(response);
+                callDeleteById(token, response);
             }
 
             @Override
@@ -92,8 +102,8 @@ public class CancelPerson extends AppCompatActivity {
         });
     }
 
-    private void callDeleteById(Response<String> response) {
-        Call<String> stringCall = conectWithJava.deleteUser(response.body());
+    private void callDeleteById(String token, Response<String> response) {
+        Call<String> stringCall = conectWithJava.deleteUser(token, response.body());
         stringCall.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
