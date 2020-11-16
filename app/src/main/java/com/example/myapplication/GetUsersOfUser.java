@@ -62,7 +62,6 @@ public class GetUsersOfUser extends AppCompatActivity {
         });
     }
 
-
     private void initializeRetrofit() {
         try {
             Gson gson = new GsonBuilder()

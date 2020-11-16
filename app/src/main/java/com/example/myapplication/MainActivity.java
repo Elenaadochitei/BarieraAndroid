@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle t;
     private NavigationView nv;
     boolean doubleBackToExitPressedOnce = false;
-    private MenuItem logOut;
     SharedPreferences sp;
 
     @Override
@@ -36,19 +36,13 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        logOut = findViewById(R.id.log_out_button);
-
-
         dl = (DrawerLayout) findViewById(R.id.activity_main);
-        t = new ActionBarDrawerToggle(this, dl, R.string.fab_transformation_sheet_behavior, R.string.hide_bottom_view_on_scroll_behavior);
-
-        dl.addDrawerListener(t);
-
-        t.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         nv = (NavigationView) findViewById(R.id.nv);
 
+        t = new ActionBarDrawerToggle(this, dl, R.string.fab_transformation_sheet_behavior, R.string.hide_bottom_view_on_scroll_behavior);
+        dl.addDrawerListener(t);
+        t.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sp = getSharedPreferences("logIn", MODE_PRIVATE);
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -56,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 switch (id) {
-                    case R.id.log_out_button:
+                    case R.id.log:
                         Toast.makeText(MainActivity.this, "V-ati deconectat de la aplicatie!", Toast.LENGTH_SHORT).show();
                         sp.edit().putBoolean("logged", false).apply();
                         openLogInActivity();
@@ -68,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         Toast.makeText(getApplicationContext(), "Bine ai venit!", Toast.LENGTH_SHORT).show();
 
         ImageButton add = (ImageButton) findViewById(R.id.add);
         ImageButton cancel = (ImageButton) findViewById(R.id.cancel);
         ImageButton admin = (ImageButton) findViewById(R.id.admin);
         ImageButton parking = (ImageButton) findViewById(R.id.parking);
+        Button parkingSpaces = (Button) findViewById(R.id.parkingSpaces);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
                 openActivityShareParking();
             }
         });
+        parkingSpaces.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openListFreeShareParking();
+            }
+        });
     }
 
     public void openLogInActivity() {
@@ -121,8 +121,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyAccount.class);
         startActivity(intent);
     }
+
     public void openActivityShareParking() {
         Intent intent = new Intent(this, ShareParking.class);
+        startActivity(intent);
+    }
+
+    public void openListFreeShareParking() {
+        Intent intent = new Intent(this, ListFreeShareParking.class);
         startActivity(intent);
     }
 

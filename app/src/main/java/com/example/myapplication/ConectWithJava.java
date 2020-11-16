@@ -16,39 +16,44 @@ import retrofit2.http.QueryMap;
 
 public interface ConectWithJava {
 
-    String API_ROUTE = "postNewUser";
+    String POST_NEW_USER = "postNewUser";
 
-    String API_ROUTEE = "updateData/{id}";
+    String UPDATE_DATA = "updateData/{id}";
 
-    String API_ROUTEEE = "deletePlateRegister/{id}";
+    String DELETE_PLATE_REGISTER = "deletePlateRegister/{id}";
 
-    String API_ROUTEEEE = "getID";
+    String GET_ID = "getID";
 
-    String API_ROUTEH = "getNameAndPlateOfUser/{id}";
+    String GET_NAME_AND_PLATE_OF_USER= "getNameAndPlateOfUser/{id}";
 
-    String API_ROUT = "shareParking";
+    String SHARE_PARKING = "shareParking";
+
+    String FREE_SHARE_PARKING = "freeShareParking";
 
     @Headers({
             "Content-type: application/json"
     })
 
-    @POST(API_ROUTE)
+    @POST(POST_NEW_USER)
     Call<NameAndPlateRegister> insertNewUser(@Body NameAndPlateRegister insertNewUser);
 
-    @PUT(API_ROUTEE)
+    @PUT(UPDATE_DATA)
     Call<String> updateUser( @Path("id") String id, @Body HashMap<String, String> updateUser);
 
-    @DELETE(API_ROUTEEE)
+    @DELETE(DELETE_PLATE_REGISTER)
     Call<String> deleteUser(@Path("id") String id);
 
-    @GET(API_ROUTEEEE)
+    @GET(GET_ID)
     Call<String> getID(@QueryMap HashMap<String, String> getIdFromMap);
 
-    @GET(API_ROUTEH)
+    @GET(GET_NAME_AND_PLATE_OF_USER)
     Call<List<NameAndPlateRegister>> getNameAndPlateOfUser(@Path("id") String id);
 
-    @POST(API_ROUT)
+    @POST(SHARE_PARKING)
     Call<SharedParkingSpace> shareParking (@Body SharedParkingSpace sharedParkingSpace);
+
+    @GET(FREE_SHARE_PARKING)
+    Call<SharedParkingSpace> FREE_SHARE_PARKING(@Path("shared_parking_space") SharedParkingSpace sharedParkingSpace);
 
 }
 

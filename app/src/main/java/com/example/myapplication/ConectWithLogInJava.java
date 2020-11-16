@@ -8,13 +8,13 @@ import retrofit2.http.Query;
 
 public interface ConectWithLogInJava {
 
-    String API_ROUTEEEEE = "getConfirmationOfUser";
+    String GET_CONFIRMATION_OF_USER = "getConfirmationOfUser";
 
 
     @Headers({
             "Content-type: application/json"
     })
 
-    @GET(API_ROUTEEEEE)
+    @GET(GET_CONFIRMATION_OF_USER)
     Call<LoginInfo> checkNameAndPassword (@Query("username") String username, @Query("password") String password);
 }

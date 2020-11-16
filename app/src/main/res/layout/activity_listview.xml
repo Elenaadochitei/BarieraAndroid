@@ -7,13 +7,12 @@
     android:paddingRight="15dp"
     android:paddingBottom="7.5dp">
 
-    <TextView
+    <ListView
         android:id="@+id/label"
         android:layout_width="314dp"
         android:layout_height="50dp"
         android:padding="10dip"
         android:textSize="20dip"
         android:textStyle="bold" />
-
 
 </LinearLayout>
