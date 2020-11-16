@@ -1,9 +1,12 @@
 package com.example.myapplication;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.KeyListener;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -11,25 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.retrofit.ConectWithJava;
 import com.example.myapplication.retrofit.RetrofitApi;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Pattern;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-
 import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
 import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
 
@@ -42,6 +35,7 @@ public class MyAccount extends AppCompatActivity {
     private Button editButton;
     private Button editButton2;
     private KeyListener keyListener;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +68,8 @@ public class MyAccount extends AppCompatActivity {
 
             updateNameAndPlateRegister();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
+            toast = Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG);
+            customErrorToast();
         }
     }
 
@@ -100,8 +95,9 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
                         if (response.body() == null) {
-                            Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
-                                    "Reintroduceti!", Toast.LENGTH_LONG).show();
+                            toast = Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
+                                    "Reintroduceti!", Toast.LENGTH_LONG);
+                            customErrorToast();
                         } else {
                             clearText();
                             Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
@@ -110,7 +106,8 @@ public class MyAccount extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String> call2, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG).show();
+                        toast = Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG);
+                        customErrorToast();
                         clearText();
 
                     }
@@ -119,7 +116,8 @@ public class MyAccount extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG).show();
+                toast = Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG);
+                customErrorToast();
             }
         });
     }
@@ -130,8 +128,9 @@ public class MyAccount extends AppCompatActivity {
         boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText().toString())).matches();
         if (!matcher) {
             updatePlate.put("plateRegister", plateRegister.getText().toString());
-            Toast.makeText(getApplicationContext(), "Format gresit!\n                  " +
-                    "                                    Reintroduceti noul numar!", Toast.LENGTH_LONG).show();
+            toast = Toast.makeText(getApplicationContext(), "Format gresit!\n                  " +
+                    "                                    Reintroduceti noul numar!", Toast.LENGTH_LONG);
+            customErrorToast();
         } else {
             updatePlate.put("plateRegister", newPlateRegister.getText().toString());
         }
@@ -142,5 +141,16 @@ public class MyAccount extends AppCompatActivity {
         name.setText("");
         plateRegister.setText("");
         newPlateRegister.setText("");
+    }
+
+    private void customErrorToast() {
+        toast.setGravity(Gravity.TOP, 0, 140);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
+        text.setTypeface(typeface);
+        toast.show();
     }
 }

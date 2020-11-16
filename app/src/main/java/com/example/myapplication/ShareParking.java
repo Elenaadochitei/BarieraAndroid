@@ -2,7 +2,11 @@ package com.example.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,6 +45,7 @@ public class ShareParking extends AppCompatActivity {
     TextView endTimeAndDate;
     private CustomDataTime selectedStartDate;
     private CustomDataTime selectedEndDate;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +67,6 @@ public class ShareParking extends AppCompatActivity {
         selectedStartDate = new CustomDataTime(this, startTimeAndDate);
         selectedEndDate = new CustomDataTime(this, endTimeAndDate);
 
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +75,6 @@ public class ShareParking extends AppCompatActivity {
                 description.setText("");
                 startTimeAndDate.setText("");
                 endTimeAndDate.setText("");
-
 
                 String text = selectedStartDate.getDateAsText();
                 String text1 = selectedEndDate.getDateAsText();
@@ -116,7 +119,8 @@ public class ShareParking extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             shareParking();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
+            toast = Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG);
+            customErrorToast();
         }
     }
 
@@ -138,8 +142,20 @@ public class ShareParking extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SharedParkingSpace> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_LONG).show();
+                toast = Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_LONG);
+                customErrorToast();
             }
         });
+    }
+
+    private void customErrorToast() {
+        toast.setGravity(Gravity.TOP, 0, 140);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
+        text.setTypeface(typeface);
+        toast.show();
     }
 }

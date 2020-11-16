@@ -2,8 +2,12 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,6 +40,7 @@ public class GetUsersOfUser extends AppCompatActivity {
     private ListView ressultat;
     private TextView label;
     ArrayList<String> guests = new ArrayList<>();
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +85,20 @@ public class GetUsersOfUser extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<NameAndPlateRegister>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nu se poate vizualiza lista", Toast.LENGTH_LONG).show();
+                toast = Toast.makeText(getApplicationContext(), "Nu se poate vizualiza lista", Toast.LENGTH_LONG);
+                customErrorToast();
             }
         });
+    }
 
+    private void customErrorToast() {
+        toast.setGravity(Gravity.TOP, 0, 140);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
+        text.setTypeface(typeface);
+        toast.show();
     }
 }
