@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.retrofit.ConectWithJava;
+import com.example.myapplication.retrofit.RetrofitApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,6 +30,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
+
 public class MyAccount extends AppCompatActivity {
 
     private static final String SHARED_PREFS = "sharedPrefs";
@@ -36,8 +41,7 @@ public class MyAccount extends AppCompatActivity {
     private TextView newPlateRegister;
     private Button editButton;
     private Button editButton2;
-    KeyListener keyListener;
-    private ConectWithJava conectWithJava;
+    private KeyListener keyListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,139 +60,87 @@ public class MyAccount extends AppCompatActivity {
         editButton = findViewById(R.id.editButton);
         keyListener = plateRegister.getKeyListener();
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-            }
-        });
-        editButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewHistory();
-            }
-        });
+        editButton.setOnClickListener(v -> saveData());
+        editButton2.setOnClickListener(v -> viewHistory());
     }
 
-    public void viewHistory() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        try {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ServerIp.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            conectWithJava = retrofit.create(ConectWithJava.class);
-            viewUsersNamesAndPlates();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune nereusita!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void viewUsersNamesAndPlates() {
-        initializeRetrofit();
+    private void viewHistory() {
         Intent intent = new Intent(this, GetUsersOfUser.class);
         startActivity(intent);
     }
 
     public void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         try {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ServerIp.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            conectWithJava = retrofit.create(ConectWithJava.class);
             updateNameAndPlateRegister();
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
-
         }
     }
 
-        private void updateNameAndPlateRegister () {
-            HashMap<String, String> updatePlate = new HashMap<>();
-            updatePlate.put("name", name.getText().toString());
+    private void updateNameAndPlateRegister() {
+        ConectWithJava conectWithJava = RetrofitApi.getInstance().create(ConectWithJava.class);
+        HashMap<String, String> updatePlate = new HashMap<>();
+        updatePlate.put("name", name.getText().toString());
+        updatePlate.put("plateRegister", plateRegister.getText().toString());
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
+        String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
+        Call<String> call = conectWithJava.getID(token, updatePlate);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Call<String> call2 = conectWithJava.updateUser(token, response.body(), updatePlate);
+                ValidateNewPlateRegister(updatePlate);
+                if (!ValidateNewPlateRegister(updatePlate)) {
+                    newPlateRegister.setText("");
+                    return;
+                }
+                call2.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call2, Response<String> response) {
+                        if (response.body() == null) {
+                            Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
+                                    "Reintroduceti!", Toast.LENGTH_LONG).show();
+                        } else {
+                            clearText();
+                            Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call2, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG).show();
+                        clearText();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<String> call2, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    private Boolean ValidateNewPlateRegister(HashMap<String, String> updatePlate) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
+        boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText().toString())).matches();
+        if (!matcher) {
             updatePlate.put("plateRegister", plateRegister.getText().toString());
-
-            Call<String> call = conectWithJava.getID(updatePlate);
-
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    Call<String> call2 = conectWithJava.updateUser(response.body(), updatePlate);
-                    ValidateNewPlateRegister(updatePlate);
-
-                    call2.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call2, Response<String> response) {
-                            System.out.println(response.body());
-                            if (response.body() == null) {
-                                name.setText("");
-                                plateRegister.setText("");
-                                newPlateRegister.setText("");
-                                Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
-                                        "Reintroduceti!", Toast.LENGTH_LONG).show();
-                            } else {
-                                name.setText("");
-                                plateRegister.setText("");
-                                newPlateRegister.setText("");
-                                Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call2, Throwable t) {
-                            Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-
-                @Override
-                public void onFailure(Call<String> call2, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG).show();
-                }
-            });
+            Toast.makeText(getApplicationContext(), "Format gresit!\n                  " +
+                    "                                    Reintroduceti noul numar!", Toast.LENGTH_LONG).show();
+        } else {
+            updatePlate.put("plateRegister", newPlateRegister.getText().toString());
         }
+        return matcher;
+    }
 
-        private void initializeRetrofit () {
-            try {
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(ServerIp.BASE_URL)
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
-
-                conectWithJava = retrofit.create(ConectWithJava.class);
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Conexiune nereusita!", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        private void ValidateNewPlateRegister (HashMap < String, String > updatePlate){
-            Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");
-            boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText())).matches();
-            if (!matcher) {
-                Toast.makeText(getApplicationContext(), "Format gresit!", Toast.LENGTH_LONG).show();
-                updatePlate.put("plateRegister", plateRegister.getText().toString());
-            } else {
-                updatePlate.put("plateRegister", newPlateRegister.getText().toString());
-                Toast.makeText(getApplicationContext(), "Modificare efectuata!", Toast.LENGTH_LONG).show();
-            }
-        }
+    private void clearText() {
+        name.setText("");
+        plateRegister.setText("");
+        newPlateRegister.setText("");
+    }
 }

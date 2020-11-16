@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.myapplication.retrofit.ConectWithJava;
+import com.example.myapplication.retrofit.RetrofitApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +25,16 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-import static com.example.myapplication.LogInPerson.ID;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_ID;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
+import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
+
 
 public class GetUsersOfUser extends AppCompatActivity {
 
     private ListView ressultat;
     private TextView label;
-    private ConectWithJava conectWithJava;
     ArrayList<String> guests = new ArrayList<>();
 
     @Override
@@ -48,7 +47,7 @@ public class GetUsersOfUser extends AppCompatActivity {
         setContentView(R.layout.activity_get_users_of_user);
         ressultat = findViewById(R.id.ressultat);
         label = findViewById(R.id.label);
-        initializeRetrofit();
+        populateView();
         Toast.makeText(this, "Selecteaza pentru a modifica", Toast.LENGTH_SHORT).show();
         ressultat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private static final String TAG = "Clik!";
@@ -62,30 +61,13 @@ public class GetUsersOfUser extends AppCompatActivity {
         });
     }
 
-    private void initializeRetrofit() {
-        try {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(ServerIp.BASE_URL)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            conectWithJava = retrofit.create(ConectWithJava.class);
-            viewMyList();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune Nereusita", Toast.LENGTH_LONG).show();
-        }
-    }
-    
-    private void viewMyList() {
-        SharedPreferences sharedPreferences = getSharedPreferences(ID, MODE_PRIVATE);
-        String test= sharedPreferences.getString(ID, null);
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, R.id.label, guests);
-        Call<List<NameAndPlateRegister>> stringCall = conectWithJava.getNameAndPlateOfUser(test);
+    private void populateView() {
+        ConectWithJava conectWithJava = RetrofitApi.getInstance().create(ConectWithJava.class);
+        SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
+        String test = sharedPreferences.getString(LOGGED_USER_ID, null);
+        ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.activity_listview, R.id.label, guests);
+        String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
+        Call<List<NameAndPlateRegister>> stringCall = conectWithJava.getNameAndPlateOfUser(token, test);
         stringCall.enqueue(new Callback<List<NameAndPlateRegister>>() {
             @Override
             public void onResponse(Call<List<NameAndPlateRegister>> call, Response<List<NameAndPlateRegister>> response) {
@@ -95,6 +77,7 @@ public class GetUsersOfUser extends AppCompatActivity {
                 }
                 ressultat.setAdapter(adapter);
             }
+
             @Override
             public void onFailure(Call<List<NameAndPlateRegister>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Nu se poate vizualiza lista", Toast.LENGTH_LONG).show();

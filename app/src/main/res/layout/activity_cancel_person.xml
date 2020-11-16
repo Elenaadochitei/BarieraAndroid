@@ -27,7 +27,7 @@
         android:layout_marginBottom="524dp"
         android:textStyle="italic"
         android:hint="Nume persoana"
-        android:textSize="28dp"
+        android:textSize="28sp"
         android:background="#A1FFFFFF"/>
 
     <EditText
