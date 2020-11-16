@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.log_out_button:
-                        Toast.makeText(MainActivity.this, "V-ati deconectat de la aplicatie!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "V-ați deconectat de la aplicație!", Toast.LENGTH_SHORT).show();
                         sp.edit().putBoolean("logged", false).apply();
                         openLogInActivity();
                         break;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Apasa din nou pentru a iesi", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Apasă din nou pentru a ieși", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -1,4 +1,5 @@
 package com.example.myapplication;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,15 +15,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.retrofit.ConectWithJava;
 import com.example.myapplication.retrofit.RetrofitApi;
+
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
 import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
 
@@ -68,7 +74,7 @@ public class MyAccount extends AppCompatActivity {
 
             updateNameAndPlateRegister();
         } catch (Exception e) {
-            toast = Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG);
+            toast = Toast.makeText(getApplicationContext(), "Conexiune nereușită", Toast.LENGTH_LONG);
             customErrorToast();
         }
     }
@@ -98,6 +104,7 @@ public class MyAccount extends AppCompatActivity {
                             toast = Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
                                     "Reintroduceti!", Toast.LENGTH_LONG);
                             customErrorToast();
+                            clearText();
                         } else {
                             clearText();
                             Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
@@ -116,7 +123,7 @@ public class MyAccount extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG);
+                toast = Toast.makeText(getApplicationContext(), "Persoana nu a fost găsită!", Toast.LENGTH_LONG);
                 customErrorToast();
             }
         });
@@ -128,8 +135,7 @@ public class MyAccount extends AppCompatActivity {
         boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText().toString())).matches();
         if (!matcher) {
             updatePlate.put("plateRegister", plateRegister.getText().toString());
-            toast = Toast.makeText(getApplicationContext(), "Format gresit!\n                  " +
-                    "                                    Reintroduceti noul numar!", Toast.LENGTH_LONG);
+            toast = Toast.makeText(getApplicationContext(), "Format greșit, reintroduceți!", Toast.LENGTH_LONG);
             customErrorToast();
         } else {
             updatePlate.put("plateRegister", newPlateRegister.getText().toString());

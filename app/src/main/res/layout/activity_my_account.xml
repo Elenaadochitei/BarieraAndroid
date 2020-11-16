@@ -22,7 +22,7 @@
         android:layout_marginBottom="467dp"
         android:background="#A1FFFFFF"
         android:textStyle="italic"
-        android:hint="Introduceti numarul masinii"
+        android:hint="Număr mașină"
         android:textSize="25dp" />
 
     <EditText
@@ -36,7 +36,7 @@
         android:layout_marginBottom="541dp"
         android:background="#A1FFFFFF"
         android:textStyle="italic"
-        android:hint="Introduceti numele"
+        android:hint="Nume persoană"
         android:textSize="25dp" />
 
     <EditText
@@ -49,21 +49,21 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="393dp"
         android:textStyle="italic"
-        android:hint="Introduceti noul numar"
+        android:hint="Noul număr mașină"
         android:textSize="25dp"
         android:background="#A1FFFFFF"/>
 
     <Button
         android:id="@+id/editButton"
-        android:layout_width="160dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="130dp"
-        android:layout_marginBottom="336dp"
+        android:layout_marginEnd="145dp"
+        android:layout_marginBottom="334dp"
         android:background="@drawable/roundedbutton"
-        android:text="Editeaza/Salveaza" />
+        android:text="Salvează" />
 
     <Button
         android:id="@+id/editButton2"

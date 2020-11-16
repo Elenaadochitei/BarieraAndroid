@@ -26,7 +26,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="524dp"
         android:textStyle="italic"
-        android:hint="Nume persoana"
+        android:hint="Nume persoană"
         android:textSize="28sp"
         android:background="#A1FFFFFF"/>
 
@@ -39,7 +39,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="451dp"
         android:textStyle="italic"
-        android:hint="Numar masina"
+        android:hint="Număr masină"
         android:textSize="28sp"
         android:background="#A1FFFFFF"/>
 
@@ -52,6 +52,6 @@
         android:layout_marginEnd="167dp"
         android:layout_marginBottom="386dp"
         android:background="@drawable/roundedbutton"
-        android:text="Salveaza" />
+        android:text="Salvează" />
 
 </RelativeLayout>
