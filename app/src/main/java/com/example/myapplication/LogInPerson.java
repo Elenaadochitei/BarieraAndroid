@@ -2,7 +2,11 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,6 +34,7 @@ public class LogInPerson extends AppCompatActivity {
     private TextView password;
     private Button logIn;
     SharedPreferences sp;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,18 +94,32 @@ public class LogInPerson extends AppCompatActivity {
                         editor.apply();
                         openMainActivity();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Logare Nereusita ", Toast.LENGTH_SHORT).show();
+                        toast = Toast.makeText(getApplicationContext(), "Logare Nereusita ", Toast.LENGTH_SHORT);
+                        customErrorToast();
                         sp.edit().putBoolean("logged", false).apply();
                     }
                 } else if (HttpStatus.SC_UNAUTHORIZED == response.code()) {
-                    Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG).show();
+                    toast = Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG);
+                    customErrorToast();
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG).show();
+               toast = Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG);
+               customErrorToast();
             }
         });
+    }
+
+    private void customErrorToast() {
+        toast.setGravity(Gravity.TOP, 0, 140);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
+        text.setTypeface(typeface);
+        toast.show();
     }
 }

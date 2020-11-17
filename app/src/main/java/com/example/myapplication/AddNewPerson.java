@@ -7,11 +7,15 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -72,6 +76,7 @@ public class AddNewPerson extends AppCompatActivity {
     CharSequence[] values = {" 1 ora ", " 8 ore ", " 1 zi ", " 5 zile "};
     CheckBox checkBox;
     LocalDateTime expirationDate;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +149,8 @@ public class AddNewPerson extends AppCompatActivity {
             insertNameAndPlateRegister();
 
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG).show();
+            toast = Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG);
+            customErrorToast();
         }
 
         HashSet<String> nameAndPlateRegister = new HashSet<>();
@@ -181,14 +187,17 @@ public class AddNewPerson extends AppCompatActivity {
                 if (response.body().getPlateRegister() != null) {
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG).show();
+                    toast = Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG);
+                    customErrorToast();
                 }
             }
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
                 clearText();
-                Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG).show();
+                toast = Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG);
+                customErrorToast();
+
             }
         });
     }
@@ -370,7 +379,8 @@ public class AddNewPerson extends AppCompatActivity {
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
         if (!matcher1 || !matcher2) {
-            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
+            toast = Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG);
+            customErrorToast();
         }
         return (matcher1 && matcher2);
     }
@@ -378,6 +388,17 @@ public class AddNewPerson extends AppCompatActivity {
     private void clearText() {
         userName.setText("");
         plateRegister.setText("");
+    }
+
+    private void customErrorToast() {
+        toast.setGravity(Gravity.TOP, 0, 140);
+        View view = toast.getView();
+        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        TextView text = view.findViewById(android.R.id.message);
+        text.setTextColor(Color.WHITE);
+        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
+        text.setTypeface(typeface);
+        toast.show();
     }
 }
 
