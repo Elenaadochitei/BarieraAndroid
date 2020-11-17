@@ -41,8 +41,8 @@ public class ShareParking extends AppCompatActivity {
     private ConectWithJava conectWithJava;
     Button startDate;
     Button expirationDate;
-    TextView startTimeAndDate;
-    TextView endTimeAndDate;
+    private TextView startTimeAndDate;
+    private TextView endTimeAndDate;
     private CustomDataTime selectedStartDate;
     private CustomDataTime selectedEndDate;
     private Toast toast;
@@ -62,25 +62,27 @@ public class ShareParking extends AppCompatActivity {
         saveButton = findViewById(R.id.editButton);
         startDate = findViewById(R.id.startDate);
         expirationDate = findViewById(R.id.expirationDate);
-        startTimeAndDate = findViewById(R.id.start);
-        endTimeAndDate = findViewById(R.id.expiration);
+        startTimeAndDate = findViewById(R.id.startDate);
+        endTimeAndDate = findViewById(R.id.expirationDate);
         selectedStartDate = new CustomDataTime(this, startTimeAndDate);
         selectedEndDate = new CustomDataTime(this, endTimeAndDate);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                spaceNumber.setText("");
-                description.setText("");
-                startTimeAndDate.setText("");
-                endTimeAndDate.setText("");
-
                 String text = selectedStartDate.getDateAsText();
                 String text1 = selectedEndDate.getDateAsText();
 
                 startDate.setText(text);
                 expirationDate.setText(text1);
+
+                saveData();
+                spaceNumber.setText("");
+                description.setText("");
+                startTimeAndDate.setText("");
+                endTimeAndDate.setText("");
+                startDate.setText("Data si ora inceput");
+                expirationDate.setText("Data si ora sfarsit");
             }
         });
         startDate.setOnClickListener(new View.OnClickListener() {
@@ -125,9 +127,10 @@ public class ShareParking extends AppCompatActivity {
     }
 
     private void shareParking() throws DateTimeParseException {
+
         SharedParkingSpace sharedParkingSpace = new SharedParkingSpace();
         sharedParkingSpace.setDescription(description.getText().toString());
-        sharedParkingSpace.setSpaceNumber(Integer.parseInt(spaceNumber.getText().toString()));
+        sharedParkingSpace.setSpaceNumber((spaceNumber.getText().toString()));
         sharedParkingSpace.setExpirationDate(startTimeAndDate.getText().toString());
         sharedParkingSpace.setStartDate(endTimeAndDate.getText().toString());
         SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
@@ -142,7 +145,7 @@ public class ShareParking extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SharedParkingSpace> call, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Fail", Toast.LENGTH_LONG);
+                toast = Toast.makeText(getApplicationContext(), "Logare Nereușită", Toast.LENGTH_LONG);
                 customErrorToast();
             }
         });
