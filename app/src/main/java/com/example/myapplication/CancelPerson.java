@@ -97,7 +97,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Nu s-a efectuat stergerea", Toast.LENGTH_LONG);
+                toast = Toast.makeText(getApplicationContext(), "Nu s-a efectuat ștergerea", Toast.LENGTH_LONG);
                 customErrorToast();
             }
         });
@@ -110,7 +110,7 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.body() == null) {
                     clearText();
-                    toast = Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceti!", Toast.LENGTH_LONG);
+                    toast = Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceți!", Toast.LENGTH_LONG);
                     customErrorToast();
                 } else
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
@@ -118,7 +118,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Nu s-a gasit persoana", Toast.LENGTH_LONG);
+                toast = Toast.makeText(getApplicationContext(), "Nu s-a găsit persoana", Toast.LENGTH_LONG);
                 customErrorToast();
             }
         });

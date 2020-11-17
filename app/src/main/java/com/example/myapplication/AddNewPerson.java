@@ -187,7 +187,7 @@ public class AddNewPerson extends AppCompatActivity {
                 if (response.body().getPlateRegister() != null) {
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                 } else {
-                    toast = Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG);
+                    toast = Toast.makeText(getApplicationContext(), "Ați ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG);
                     customErrorToast();
                 }
             }
@@ -195,7 +195,7 @@ public class AddNewPerson extends AppCompatActivity {
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
                 clearText();
-                toast = Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG);
+                toast = Toast.makeText(getApplicationContext(), "Adăugare Nereusită", Toast.LENGTH_LONG);
                 customErrorToast();
 
             }
@@ -333,7 +333,7 @@ public class AddNewPerson extends AppCompatActivity {
     public void createAlertDialogWithRadioButtonGroup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setTitle("Selectati perioada de sedere:");
+        builder.setTitle("Selectați perioada de ședere:");
 
         builder.setNeutralButton("Anulare", new DialogInterface.OnClickListener() {
             @Override
@@ -347,22 +347,22 @@ public class AddNewPerson extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int item) {
                 switch (item) {
                     case 0:
-                        defaultText.setText("Perioada de sedere este de 1 ora");
+                        defaultText.setText("Perioada de ședere este de 1 ora");
                         expirationDate = LocalDateTime.now().plusHours(1);
                         Toast.makeText(AddNewPerson.this, "1 ora", Toast.LENGTH_LONG).show();
                         break;
                     case 1:
-                        defaultText.setText("Perioada de sedere este de 8 ore");
+                        defaultText.setText("Perioada de ședere este de 8 ore");
                         expirationDate = LocalDateTime.now().plusHours(8);
                         Toast.makeText(AddNewPerson.this, "8 ore", Toast.LENGTH_LONG).show();
                         break;
                     case 2:
-                        defaultText.setText("Perioada de sedere este de 1 zi");
+                        defaultText.setText("Perioada de ședere este de 1 zi");
                         expirationDate = LocalDateTime.now().plusDays(1);
                         Toast.makeText(AddNewPerson.this, "1 zi", Toast.LENGTH_LONG).show();
                         break;
                     case 3:
-                        defaultText.setText("Perioada de sedere este de 5 zile");
+                        defaultText.setText("Perioada de ședere este de 5 zile");
                         expirationDate = LocalDateTime.now().plusDays(5);
                         Toast.makeText(AddNewPerson.this, "5 zile", Toast.LENGTH_LONG).show();
                         break;
@@ -379,7 +379,7 @@ public class AddNewPerson extends AppCompatActivity {
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
         if (!matcher1 || !matcher2) {
-            toast = Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG);
+            toast = Toast.makeText(getApplicationContext(), "Format greșit, reintroduceți!", Toast.LENGTH_LONG);
             customErrorToast();
         }
         return (matcher1 && matcher2);

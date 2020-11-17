@@ -32,7 +32,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="451dp"
         android:textStyle="italic"
-        android:hint="Numar masina"
+        android:hint="Număr mașină"
         android:textSize="28sp"
         android:background="#A1FFFFFF"/>
 
@@ -47,7 +47,7 @@
         android:layout_marginBottom="526dp"
         android:background="#A1FFFFFF"
         android:textStyle="italic"
-        android:hint="Nume persoana"
+        android:hint="Nume persoană"
         android:textSize="28sp" />
 
     <Button
@@ -59,7 +59,7 @@
         android:layout_marginEnd="171dp"
         android:layout_marginBottom="279dp"
         android:background="@drawable/roundedbutton"
-        android:text="Salveaza" />
+        android:text="Salvează" />
 
     <Button
         android:id="@+id/openGallery"
@@ -70,7 +70,7 @@
         android:layout_marginEnd="98dp"
         android:layout_marginBottom="337dp"
         android:background="@drawable/roundedbutton"
-        android:text="Adauga imagine autoturism" />
+        android:text="Adăugare imagine autoturism" />
 
     <CheckBox
         android:id="@+id/checkBoxGuest"

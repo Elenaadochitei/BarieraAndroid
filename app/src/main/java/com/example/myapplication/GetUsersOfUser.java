@@ -53,7 +53,7 @@ public class GetUsersOfUser extends AppCompatActivity {
         ressultat = findViewById(R.id.ressultat);
         label = findViewById(R.id.label);
         populateView();
-        Toast.makeText(this, "Selecteaza pentru a modifica", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selectează pentru a modifica", Toast.LENGTH_SHORT).show();
         ressultat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private static final String TAG = "Clik!";
 

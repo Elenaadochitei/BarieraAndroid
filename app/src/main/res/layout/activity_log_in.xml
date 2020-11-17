@@ -42,7 +42,7 @@
         android:layout_marginBottom="565dp"
         android:background="#A1FFFFFF"
         android:textStyle="italic"
-        android:hint="Parola"
+        android:hint="Parolă"
         android:inputType="textPassword"
         android:textSize="32sp" />
 

@@ -22,7 +22,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="541dp"
         android:background="#A1FFFFFF"
-        android:hint="Introduceti numarul parcarii"
+        android:hint="Introducere număr parcare"
         android:textSize="25dp"
         android:textStyle="italic"/>
 
@@ -35,7 +35,7 @@
         android:layout_marginEnd="-4dp"
         android:layout_marginBottom="391dp"
         android:background="#A1FFFFFF"
-        android:hint="Adaugati o descriere(limita 150 caractere)"
+        android:hint="Adăugare descriere(limită 150 caractere)"
         android:maxLength="150"
         android:textSize="25dp"
         android:textStyle="italic"/>
@@ -50,7 +50,7 @@
         android:layout_marginBottom="330dp"
         android:layout_toStartOf="@+id/expirationDate"
         android:background="@drawable/roundedbutton"
-        android:text="Data si ora inceput" />
+        android:text="Data și ora început" />
 
     <Button
         android:id="@+id/expirationDate"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="330dp"
         android:background="@drawable/roundedbutton"
-        android:text="Data si ora sfarsit" />
+        android:text="Data și ora sfârșit" />
 
     <Button
         android:id="@+id/editButton"
@@ -74,6 +74,6 @@
         android:layout_marginEnd="150dp"
         android:layout_marginBottom="270dp"
         android:background="@drawable/roundedbutton"
-        android:text="Salveaza" />
+        android:text="Salvează" />
 
 </RelativeLayout>

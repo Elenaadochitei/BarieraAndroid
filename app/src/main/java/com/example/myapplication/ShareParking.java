@@ -121,7 +121,7 @@ public class ShareParking extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             shareParking();
         } catch (Exception e) {
-            toast = Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG);
+            toast = Toast.makeText(getApplicationContext(), "Conexiune nereușită", Toast.LENGTH_LONG);
             customErrorToast();
         }
     }

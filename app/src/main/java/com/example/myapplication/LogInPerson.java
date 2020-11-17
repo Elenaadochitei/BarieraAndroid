@@ -94,12 +94,12 @@ public class LogInPerson extends AppCompatActivity {
                         editor.apply();
                         openMainActivity();
                     } else {
-                        toast = Toast.makeText(getApplicationContext(), "Logare Nereusita ", Toast.LENGTH_SHORT);
+                        toast = Toast.makeText(getApplicationContext(), "Logare Nereusită ", Toast.LENGTH_SHORT);
                         customErrorToast();
                         sp.edit().putBoolean("logged", false).apply();
                     }
                 } else if (HttpStatus.SC_UNAUTHORIZED == response.code()) {
-                    toast = Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG);
+                    toast = Toast.makeText(getApplicationContext(), "Logare Nereusită", Toast.LENGTH_LONG);
                     customErrorToast();
                 }
             }
