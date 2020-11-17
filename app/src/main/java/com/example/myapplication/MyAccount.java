@@ -102,7 +102,7 @@ public class MyAccount extends AppCompatActivity {
                     public void onResponse(Call<String> call2, Response<String> response) {
                         if (response.body() == null) {
                             toast = Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
-                                    "Reintroduceti!", Toast.LENGTH_LONG);
+                                    "Reintroduceți!", Toast.LENGTH_LONG);
                             customErrorToast();
                             clearText();
                         } else {

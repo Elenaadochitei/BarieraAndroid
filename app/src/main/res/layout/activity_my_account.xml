@@ -49,7 +49,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="393dp"
         android:textStyle="italic"
-        android:hint="Noul număr mașină"
+        android:hint="Număr mașină nou"
         android:textSize="25dp"
         android:background="#A1FFFFFF"/>
 

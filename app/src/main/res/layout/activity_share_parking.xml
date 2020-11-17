@@ -22,7 +22,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="541dp"
         android:background="#A1FFFFFF"
-        android:hint="Introducere număr parcări"
+        android:hint="Introducere număr parcare"
         android:textSize="25dp" />
 
     <EditText
@@ -34,7 +34,7 @@
         android:layout_marginEnd="-4dp"
         android:layout_marginBottom="391dp"
         android:background="#A1FFFFFF"
-        android:hint="Adăugare descriere(limita 150 caractere)"
+        android:hint="Adăugare descriere(limită 150 caractere)"
         android:maxLength="150"
         android:textSize="25dp" />
 
