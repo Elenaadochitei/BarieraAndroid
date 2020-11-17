@@ -2,12 +2,12 @@ package com.example.myapplication;
 
 public class SharedParkingSpace {
 
-    int spaceNumber;
+    String spaceNumber;
     String description;
     String startDate;
     String expirationDate;
 
-    public SharedParkingSpace(int spaceNumber, String startDate, String expirationDate, String description) {
+    public SharedParkingSpace(String spaceNumber, String startDate, String expirationDate, String description) {
         this.spaceNumber = spaceNumber;
         this.startDate = startDate;
         this.expirationDate = expirationDate;
@@ -16,11 +16,11 @@ public class SharedParkingSpace {
     public SharedParkingSpace() {
     }
 
-    public int getSpaceNumber() {
+    public String getSpaceNumber() {
         return spaceNumber;
     }
 
-    public void setSpaceNumber(int spaceNumber) {
+    public void setSpaceNumber(String spaceNumber) {
         this.spaceNumber = spaceNumber;
     }
 

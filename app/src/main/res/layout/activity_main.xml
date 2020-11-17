@@ -162,6 +162,16 @@
             android:scaleType="fitXY"
             android:src="@drawable/parking" />
 
+        <Button
+            android:id="@+id/parkingSpaces"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="480dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Locuri de parcare libere"/>
 
     </RelativeLayout>
 

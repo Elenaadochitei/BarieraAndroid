@@ -22,6 +22,7 @@
         <activity android:name=".CancelPerson" />
         <activity android:name=".AddNewPerson" />
         <activity android:name=".ShareParking" />
+        <activity android:name=".ListFreeShareParking"/>
         <activity android:name=".LogInPerson" >
 
             <intent-filter>
