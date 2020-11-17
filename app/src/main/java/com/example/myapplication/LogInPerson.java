@@ -51,6 +51,10 @@ public class LogInPerson extends AppCompatActivity {
 
         userName = findViewById(R.id.name);
         password = findViewById(R.id.password);
+
+
+        logIn.setOnClickListener(v -> checkNameAndPassword());
+
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
