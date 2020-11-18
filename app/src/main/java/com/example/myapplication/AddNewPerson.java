@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,9 +20,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +79,7 @@ public class AddNewPerson extends AppCompatActivity {
     CharSequence[] values = {" 1 ora ", " 8 ore ", " 1 zi ", " 5 zile "};
     CheckBox checkBox;
     LocalDateTime expirationDate;
+    private ProgressBar spinner;
     private Toast toast;
 
     @Override
@@ -93,8 +97,11 @@ public class AddNewPerson extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
         defaultText = findViewById(R.id.defaulText);
         checkBox = (CheckBox) findViewById(R.id.checkBoxGuest);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
 
         Button openGallery = (Button) findViewById(R.id.openGallery);
+
+        spinner.setVisibility(View.GONE);
 
         openGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +129,8 @@ public class AddNewPerson extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveData();
+                spinner.setVisibility(View.VISIBLE);
+                hideKeyboard(v);
                 checkBox.setChecked(false);
                 plateRegister.setText("");
                 userName.setText("");
@@ -151,6 +160,8 @@ public class AddNewPerson extends AppCompatActivity {
         } catch (Exception e) {
             toast = Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG);
             customErrorToast();
+            Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG).show();
+            spinner.setVisibility(View.GONE);
         }
 
         HashSet<String> nameAndPlateRegister = new HashSet<>();
@@ -186,18 +197,25 @@ public class AddNewPerson extends AppCompatActivity {
             public void onResponse(Call<NameAndPlateRegister> call, Response<NameAndPlateRegister> response) {
                 if (response.body().getPlateRegister() != null) {
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
+                    spinner.setVisibility(View.GONE);
                 } else {
+                    Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG).show();
+                    spinner.setVisibility(View.GONE);
                     toast = Toast.makeText(getApplicationContext(), "Ați ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG);
                     customErrorToast();
+                    spinner.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
                 clearText();
+                Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG).show();
+                spinner.setVisibility(View.GONE);
                 toast = Toast.makeText(getApplicationContext(), "Adăugare Nereusită", Toast.LENGTH_LONG);
                 customErrorToast();
 
+                spinner.setVisibility(View.GONE);
             }
         });
     }
@@ -379,6 +397,9 @@ public class AddNewPerson extends AppCompatActivity {
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
         if (!matcher1 || !matcher2) {
+            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
+            spinner.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
             toast = Toast.makeText(getApplicationContext(), "Format greșit, reintroduceți!", Toast.LENGTH_LONG);
             customErrorToast();
         }
@@ -389,7 +410,10 @@ public class AddNewPerson extends AppCompatActivity {
         userName.setText("");
         plateRegister.setText("");
     }
-
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     private void customErrorToast() {
         toast.setGravity(Gravity.TOP, 0, 140);
         View view = toast.getView();

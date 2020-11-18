@@ -50,13 +50,13 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:layout_width="68dp"
+            android:layout_width="75dp"
             android:layout_height="53dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="130dp"
             android:layout_marginBottom="635dp"
-            android:text="Contul meu"
+            android:text="Modificare numar"
             android:textAlignment="center"
             android:textColor="#040404"
             android:textSize="15sp"
@@ -166,9 +166,8 @@
             android:id="@+id/parkingSpaces"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="100dp"
             android:layout_marginBottom="480dp"
             android:background="@drawable/roundedbutton"
             android:text="Locuri de parcare libere"/>

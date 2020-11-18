@@ -27,7 +27,7 @@
         android:layout_marginBottom="524dp"
         android:textStyle="italic"
         android:hint="Nume persoană"
-        android:textSize="28sp"
+        android:textSize="25dp"
         android:background="#A1FFFFFF"/>
 
     <EditText
@@ -40,16 +40,15 @@
         android:layout_marginBottom="451dp"
         android:textStyle="italic"
         android:hint="Număr mașină"
-        android:textSize="28sp"
+        android:textSize="25dp"
         android:background="#A1FFFFFF"/>
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="116dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="167dp"
         android:layout_marginBottom="386dp"
         android:background="@drawable/roundedbutton"
         android:text="Salvează" />

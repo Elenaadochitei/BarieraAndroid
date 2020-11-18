@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,7 +11,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ public class ShareParking extends AppCompatActivity {
     private TextView endTimeAndDate;
     private CustomDataTime selectedStartDate;
     private CustomDataTime selectedEndDate;
+    private ProgressBar spinner;
     private Toast toast;
 
     @Override
@@ -66,10 +70,17 @@ public class ShareParking extends AppCompatActivity {
         endTimeAndDate = findViewById(R.id.expirationDate);
         selectedStartDate = new CustomDataTime(this, startTimeAndDate);
         selectedEndDate = new CustomDataTime(this, endTimeAndDate);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+
+        spinner.setVisibility(View.GONE);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                spinner.setVisibility(View.VISIBLE);
+                hideKeyboard(v);
+
                 String text = selectedStartDate.getDateAsText();
                 String text1 = selectedEndDate.getDateAsText();
 
@@ -121,6 +132,9 @@ public class ShareParking extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             shareParking();
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
+            spinner.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
             toast = Toast.makeText(getApplicationContext(), "Conexiune nereușită", Toast.LENGTH_LONG);
             customErrorToast();
         }
@@ -141,14 +155,22 @@ public class ShareParking extends AppCompatActivity {
             @Override
             public void onResponse(Call<SharedParkingSpace> call, Response<SharedParkingSpace> response) {
                 Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
+                spinner.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<SharedParkingSpace> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG).show();
+                spinner.setVisibility(View.GONE);
                 toast = Toast.makeText(getApplicationContext(), "Logare Nereușită", Toast.LENGTH_LONG);
                 customErrorToast();
+                spinner.setVisibility(View.GONE);
             }
         });
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void customErrorToast() {

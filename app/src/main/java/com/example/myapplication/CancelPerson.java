@@ -19,12 +19,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.HashMap;
 import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+
 import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_SHARED_PREF;
 import static com.example.myapplication.constants.SharedPreferencesConstants.LOGGED_USER_TOKEN;
 
@@ -82,7 +84,6 @@ public class CancelPerson extends AppCompatActivity {
         HashMap<String, String> deleteUsers = new HashMap<>();
         deleteUsers.put("name", userName.getText().toString());
         deleteUsers.put("plateRegister", plateRegister.getText().toString());
-
 
         SharedPreferences sharedPreferences = getSharedPreferences(LOGGED_USER_SHARED_PREF, MODE_PRIVATE);
         String token = sharedPreferences.getString(LOGGED_USER_TOKEN, null);
