@@ -55,4 +55,3 @@ public interface ConectWithJava {
     Call<SharedParkingSpace> shareParking(@Header("Authorization") String token, @Body SharedParkingSpace sharedParkingSpace);
 
 }
-

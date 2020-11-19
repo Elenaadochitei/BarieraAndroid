@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,8 +12,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ public class MyAccount extends AppCompatActivity {
     private Button editButton2;
     private KeyListener keyListener;
     private Toast toast;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,14 @@ public class MyAccount extends AppCompatActivity {
         editButton2 = findViewById(R.id.editButton2);
         editButton = findViewById(R.id.editButton);
         keyListener = plateRegister.getKeyListener();
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
 
-        editButton.setOnClickListener(v -> saveData());
+        editButton.setOnClickListener(v -> {
+            spinner.setVisibility(View.VISIBLE);
+            hideKeyboard(v);
+            saveData();
+        });
         editButton2.setOnClickListener(v -> viewHistory());
     }
 
@@ -71,11 +81,13 @@ public class MyAccount extends AppCompatActivity {
 
     public void saveData() {
         try {
-
             updateNameAndPlateRegister();
         } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
+            spinner.setVisibility(View.GONE);
             toast = Toast.makeText(getApplicationContext(), "Conexiune nereușită", Toast.LENGTH_LONG);
             customErrorToast();
+            spinner.setVisibility(View.GONE);
         }
     }
 
@@ -101,13 +113,18 @@ public class MyAccount extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call2, Response<String> response) {
                         if (response.body() == null) {
+                            Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
+                                    "Reintroduceti!", Toast.LENGTH_LONG).show();
+                            spinner.setVisibility(View.GONE);
                             toast = Toast.makeText(getApplicationContext(), "Datele introduse sunt incorecte!\n               " +
                                     "Reintroduceți!", Toast.LENGTH_LONG);
                             customErrorToast();
                             clearText();
+                            spinner.setVisibility(View.GONE);
                         } else {
                             clearText();
                             Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
+                            spinner.setVisibility(View.GONE);
                         }
                     }
 
@@ -116,15 +133,18 @@ public class MyAccount extends AppCompatActivity {
                         toast = Toast.makeText(getApplicationContext(), "Datele nu au fost modificate!", Toast.LENGTH_LONG);
                         customErrorToast();
                         clearText();
-
+                        spinner.setVisibility(View.GONE);
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<String> call2, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Persoana nu a fost gasita!", Toast.LENGTH_LONG).show();
+                spinner.setVisibility(View.GONE);
                 toast = Toast.makeText(getApplicationContext(), "Persoana nu a fost găsită!", Toast.LENGTH_LONG);
                 customErrorToast();
+                spinner.setVisibility(View.GONE);
             }
         });
     }
@@ -135,6 +155,10 @@ public class MyAccount extends AppCompatActivity {
         boolean matcher = pattern.matcher(Objects.requireNonNull(newPlateRegister.getText().toString())).matches();
         if (!matcher) {
             updatePlate.put("plateRegister", plateRegister.getText().toString());
+            Toast.makeText(getApplicationContext(), "Format gresit!\n                  " +
+                    "                                    Reintroduceti noul numar!", Toast.LENGTH_LONG).show();
+            spinner.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
             toast = Toast.makeText(getApplicationContext(), "Format greșit, reintroduceți!", Toast.LENGTH_LONG);
             customErrorToast();
         } else {
@@ -147,6 +171,10 @@ public class MyAccount extends AppCompatActivity {
         name.setText("");
         plateRegister.setText("");
         newPlateRegister.setText("");
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void customErrorToast() {

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     tools:context=".LogInPerson">
 
     <ImageView
@@ -29,7 +31,7 @@
         android:background="#A1FFFFFF"
         android:textStyle="italic"
         android:hint="Nume"
-        android:textSize="28sp" />
+        android:textSize="25dp" />
 
     <EditText
         android:id="@+id/password"
@@ -44,17 +46,25 @@
         android:textStyle="italic"
         android:hint="Parolă"
         android:inputType="textPassword"
-        android:textSize="32sp" />
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/log_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="171dp"
         android:layout_marginBottom="480dp"
         android:background="@drawable/roundedbutton"
-        android:text="LogIn" />
+        android:text="Conectează-te" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="400dp" />
 
 </RelativeLayout>

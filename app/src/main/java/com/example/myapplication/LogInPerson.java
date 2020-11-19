@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,7 +11,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class LogInPerson extends AppCompatActivity {
     private TextView password;
     private Button logIn;
     SharedPreferences sp;
+    private ProgressBar spinner;
     private Toast toast;
 
     @Override
@@ -49,6 +53,7 @@ public class LogInPerson extends AppCompatActivity {
 
         logIn = findViewById(R.id.log_in_button);
         sp = getSharedPreferences("logIn", MODE_PRIVATE);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
 
         if (sp.getBoolean("logged", false)) {
             openMainActivity();
@@ -56,13 +61,15 @@ public class LogInPerson extends AppCompatActivity {
 
         userName = findViewById(R.id.name);
         password = findViewById(R.id.password);
-
+        spinner.setVisibility(View.GONE);
 
         logIn.setOnClickListener(v -> checkNameAndPassword());
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
+                hideKeyboard(v);
                 checkNameAndPassword();
             }
         });
@@ -97,10 +104,13 @@ public class LogInPerson extends AppCompatActivity {
                         toast = Toast.makeText(getApplicationContext(), "Logare Nereusită ", Toast.LENGTH_SHORT);
                         customErrorToast();
                         sp.edit().putBoolean("logged", false).apply();
+                        spinner.setVisibility(View.GONE);
                     }
                 } else if (HttpStatus.SC_UNAUTHORIZED == response.code()) {
                     toast = Toast.makeText(getApplicationContext(), "Logare Nereusită", Toast.LENGTH_LONG);
                     customErrorToast();
+                    Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG).show();
+                    spinner.setVisibility(View.GONE);
                 }
             }
 
@@ -108,8 +118,14 @@ public class LogInPerson extends AppCompatActivity {
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                toast = Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG);
                customErrorToast();
+                Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG).show();
+                spinner.setVisibility(View.GONE);
             }
         });
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void customErrorToast() {
