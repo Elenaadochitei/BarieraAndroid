@@ -30,7 +30,7 @@
     <item
         android:id="@+id/conectare"
         android:icon="@drawable/finger"
-        android:title="Date biometrice"
+        android:title="Conectare cu date biometrice"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
     <item
