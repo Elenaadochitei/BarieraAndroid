@@ -20,7 +20,6 @@
         android:title="Schimbare parolă"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
-
     <item
         android:id="@+id/confidenialitate"
         android:icon="@drawable/key"
