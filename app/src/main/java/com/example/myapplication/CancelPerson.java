@@ -1,16 +1,20 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -114,7 +118,8 @@ public class CancelPerson extends AppCompatActivity {
                     toast = Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceți!", Toast.LENGTH_LONG);
                     customErrorToast();
                 } else
-                    Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
+               //     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
+                customErrorToast();
             }
 
             @Override
@@ -130,14 +135,17 @@ public class CancelPerson extends AppCompatActivity {
         plateRegister.setText("");
     }
 
+    @SuppressLint("SetTextI18n")
     private void customErrorToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) findViewById(R.id.relativeLayout1));
+//        TextView text = (TextView) layout.findViewById(R.id.text);
+//        text.setText("Hello! This is a custom toast!");
+        toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 140);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        TextView text = view.findViewById(android.R.id.message);
-        text.setTextColor(Color.WHITE);
-        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
-        text.setTypeface(typeface);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
     }
 }
