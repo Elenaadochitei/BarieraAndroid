@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/log"
         android:icon="@drawable/log"
@@ -10,31 +9,31 @@
         android:background="#A1FFFFFF"/>
     <item
         android:id="@+id/date"
-        android:icon="@drawable/personaldates"
+        android:icon="@drawable/persdata"
         android:title="Date personale"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
     <item
         android:id="@+id/parola"
-        android:icon="@drawable/lock"
+        android:icon="@drawable/pass"
         android:title="Schimbare parolă"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
     <item
         android:id="@+id/confidenialitate"
-        android:icon="@drawable/key"
+        android:icon="@drawable/conf"
         android:title="Confidențialitate"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
     <item
         android:id="@+id/conectare"
-        android:icon="@drawable/finger"
+        android:icon="@drawable/biometric"
         android:title="Conectare cu date biometrice"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
     <item
         android:id="@+id/termenisicond"
-        android:icon="@drawable/termenisicond"
+        android:icon="@drawable/terms"
         android:title="Termeni și condiții"
         app:showAsAction="always"
         android:background="#A1FFFFFF"/>
