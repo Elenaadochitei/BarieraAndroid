@@ -16,10 +16,9 @@
         android:id="@+id/numberParking"
         android:layout_width="match_parent"
         android:layout_height="74dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="541dp"
         android:background="#A1FFFFFF"
         android:hint="Introducere număr parcare"
@@ -30,9 +29,9 @@
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-4dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="391dp"
         android:background="#A1FFFFFF"
         android:hint="Adăugare descriere(limită 150 caractere)"
@@ -73,24 +72,6 @@
         android:layout_marginBottom="270dp"
         android:background="@drawable/roundedbutton"
         android:text="Salvează" />
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="200dp" />
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="200dp" />
 
     <ProgressBar
         android:id="@+id/progressBar1"

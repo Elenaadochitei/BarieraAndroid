@@ -49,7 +49,10 @@ public class ListFreeShareParking extends AppCompatActivity {
                 "Data si ora inceput: " + sharedParkingSpace.getStartDate(),
                 "Data si ora sfarsit: " + sharedParkingSpace.getExpirationDate(),
                 "Descriere: " + sharedParkingSpace.getDescription());
-        results.add(obj);
+
+        if(obj==null) {
+            results.add(obj);
+        }
         return results;
     }
 }
