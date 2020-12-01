@@ -17,7 +17,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -97,7 +99,7 @@ public class AddNewPerson extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
         defaultText = findViewById(R.id.defaulText);
         checkBox = (CheckBox) findViewById(R.id.checkBoxGuest);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) findViewById(R.id.progressBar1);
 
         Button openGallery = (Button) findViewById(R.id.openGallery);
 
@@ -158,9 +160,7 @@ public class AddNewPerson extends AppCompatActivity {
             insertNameAndPlateRegister();
 
         } catch (Exception e) {
-            toast = Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG);
-            customErrorToast();
-            Toast.makeText(getApplicationContext(), "Datele nu au fost salvate!", Toast.LENGTH_LONG).show();
+            customErrorToast("Ați ajuns la limita de a mai putea introduce");
             spinner.setVisibility(View.GONE);
         }
 
@@ -199,10 +199,7 @@ public class AddNewPerson extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_SHORT).show();
                     spinner.setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Ati ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG).show();
-                    spinner.setVisibility(View.GONE);
-                    toast = Toast.makeText(getApplicationContext(), "Ați ajuns la limita de a mai putea introduce", Toast.LENGTH_LONG);
-                    customErrorToast();
+                    customErrorToast("Ați ajuns la limita de a mai putea introduce");
                     spinner.setVisibility(View.GONE);
                 }
             }
@@ -210,11 +207,7 @@ public class AddNewPerson extends AppCompatActivity {
             @Override
             public void onFailure(Call<NameAndPlateRegister> call, Throwable t) {
                 clearText();
-                Toast.makeText(getApplicationContext(), "Adaugare Nereusita", Toast.LENGTH_LONG).show();
-                spinner.setVisibility(View.GONE);
-                toast = Toast.makeText(getApplicationContext(), "Adăugare Nereusită", Toast.LENGTH_LONG);
-                customErrorToast();
-
+                customErrorToast("Adăugare Nereusită");
                 spinner.setVisibility(View.GONE);
             }
         });
@@ -397,11 +390,8 @@ public class AddNewPerson extends AppCompatActivity {
         boolean matcher1 = pattern.matcher(Objects.requireNonNull(insert.getName())).matches();
         boolean matcher2 = pattern.matcher(Objects.requireNonNull(insert.getPlateRegister())).matches();
         if (!matcher1 || !matcher2) {
-            Toast.makeText(getApplicationContext(), "Format gresit, reintroduceti!", Toast.LENGTH_LONG).show();
+            customErrorToast("Format greșit, reintroduceți!");
             spinner.setVisibility(View.GONE);
-            spinner.setVisibility(View.GONE);
-            toast = Toast.makeText(getApplicationContext(), "Format greșit, reintroduceți!", Toast.LENGTH_LONG);
-            customErrorToast();
         }
         return (matcher1 && matcher2);
     }
@@ -410,18 +400,21 @@ public class AddNewPerson extends AppCompatActivity {
         userName.setText("");
         plateRegister.setText("");
     }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-    private void customErrorToast() {
+
+    private void customErrorToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.relativeLayout1));
+        TextView text = (TextView) layout.findViewById(R.id.textView2);
+        text.setText(message);
+        Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 140);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        TextView text = view.findViewById(android.R.id.message);
-        text.setTextColor(Color.WHITE);
-        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
-        text.setTypeface(typeface);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
     }
 }

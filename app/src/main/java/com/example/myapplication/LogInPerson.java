@@ -8,7 +8,9 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -54,7 +56,7 @@ public class LogInPerson extends AppCompatActivity {
 
         logIn = findViewById(R.id.log_in_button);
         sp = getSharedPreferences("logIn", MODE_PRIVATE);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) findViewById(R.id.progressBar1);
 
         if (sp.getBoolean("logged", false)) {
             openMainActivity();
@@ -102,41 +104,38 @@ public class LogInPerson extends AppCompatActivity {
                         editor.apply();
                         openMainActivity();
                     } else {
-                        toast = Toast.makeText(getApplicationContext(), "Logare Nereusită ", Toast.LENGTH_SHORT);
-                        customErrorToast();
+                        customErrorToast("Logare Nereusită");
                         sp.edit().putBoolean("logged", false).apply();
                         spinner.setVisibility(View.GONE);
                     }
                 } else if (HttpStatus.SC_UNAUTHORIZED == response.code()) {
-                    toast = Toast.makeText(getApplicationContext(), "Logare Nereusită", Toast.LENGTH_LONG);
-                    customErrorToast();
-                    Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG).show();
+                    customErrorToast("Logare Nereusită");
                     spinner.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-               toast = Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG);
-               customErrorToast();
-                Toast.makeText(getApplicationContext(), "Eroare la conectarea cu serverul.", Toast.LENGTH_LONG).show();
+                customErrorToast("Eroare la conectarea cu serverul");
                 spinner.setVisibility(View.GONE);
             }
         });
     }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void customErrorToast() {
+    private void customErrorToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.relativeLayout1));
+        TextView text = (TextView) layout.findViewById(R.id.textView2);
+        text.setText(message);
+        Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 140);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        TextView text = view.findViewById(android.R.id.message);
-        text.setTextColor(Color.WHITE);
-        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
-        text.setTypeface(typeface);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
     }
 }

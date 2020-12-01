@@ -82,8 +82,7 @@ public class CancelPerson extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             deleteNameAndPlateRegister();
         } catch (Exception e) {
-        //    toast = Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG);
-         //   customErrorToast();
+            customErrorToast("Date nesalvate!");
         }
         Toast.makeText(this, "Date Salvate", Toast.LENGTH_SHORT).show();
     }
@@ -107,8 +106,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-             //   toast = Toast.makeText(getApplicationContext(), "Nu s-a efectuat ștergerea", Toast.LENGTH_LONG);
-           //     customErrorToast();
+                customErrorToast("Nu s-a efectuat ștergerea");
             }
         });
     }
@@ -120,19 +118,14 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.body() == null) {
                     clearText();
-                  Toast  toast = Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceți!", Toast.LENGTH_LONG);
                     customErrorToast("Date incorecte, reintroduceți!");
-                 //   text.setText("Date incorecte, reintroduceți!");
-
                 } else
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
-                    customErrorToast("Date saaaalvate");
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-             //   toast = Toast.makeText(getApplicationContext(), "Nu s-a găsit persoana", Toast.LENGTH_LONG);
-                //  customErrorToast();
+                customErrorToast("Nu s-a găsit persoana");
             }
         });
     }

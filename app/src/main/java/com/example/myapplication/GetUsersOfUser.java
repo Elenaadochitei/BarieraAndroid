@@ -8,7 +8,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -85,20 +87,20 @@ public class GetUsersOfUser extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<NameAndPlateRegister>> call, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Nu se poate vizualiza lista", Toast.LENGTH_LONG);
-                customErrorToast();
+                customErrorToast("Nu se poate vizualiza lista");
             }
         });
     }
 
-    private void customErrorToast() {
+    private void customErrorToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.relativeLayout1));
+        TextView text = (TextView) layout.findViewById(R.id.textView2);
+        text.setText(message);
+        Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 140);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        TextView text = view.findViewById(android.R.id.message);
-        text.setTextColor(Color.WHITE);
-        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
-        text.setTypeface(typeface);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
     }
 }

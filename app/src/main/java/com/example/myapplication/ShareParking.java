@@ -8,7 +8,9 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -70,7 +72,7 @@ public class ShareParking extends AppCompatActivity {
         endTimeAndDate = findViewById(R.id.expirationDate);
         selectedStartDate = new CustomDataTime(this, startTimeAndDate);
         selectedEndDate = new CustomDataTime(this, endTimeAndDate);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) findViewById(R.id.progressBar1);
 
         spinner.setVisibility(View.GONE);
 
@@ -130,11 +132,8 @@ public class ShareParking extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             shareParking();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Conexiune nereusita", Toast.LENGTH_LONG).show();
             spinner.setVisibility(View.GONE);
-            spinner.setVisibility(View.GONE);
-            toast = Toast.makeText(getApplicationContext(), "Conexiune nereușită", Toast.LENGTH_LONG);
-            customErrorToast();
+            customErrorToast("Conexiune nereușită");
         }
     }
 
@@ -158,27 +157,26 @@ public class ShareParking extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SharedParkingSpace> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Logare Nereusita", Toast.LENGTH_LONG).show();
-                spinner.setVisibility(View.GONE);
-                toast = Toast.makeText(getApplicationContext(), "Logare Nereușită", Toast.LENGTH_LONG);
-                customErrorToast();
+                customErrorToast("Logare Nereușită");
                 spinner.setVisibility(View.GONE);
             }
         });
     }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void customErrorToast() {
+    private void customErrorToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.relativeLayout1));
+        TextView text = (TextView) layout.findViewById(R.id.textView2);
+        text.setText(message);
+        Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 140);
-        View view = toast.getView();
-        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        TextView text = view.findViewById(android.R.id.message);
-        text.setTextColor(Color.WHITE);
-        Typeface typeface = Typeface.create("normal", Typeface.BOLD);
-        text.setTypeface(typeface);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
         toast.show();
     }
 }
