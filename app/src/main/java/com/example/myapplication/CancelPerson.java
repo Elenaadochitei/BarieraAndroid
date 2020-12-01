@@ -2,7 +2,10 @@ package com.example.myapplication;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -97,7 +100,7 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nu s-a efectuat stergerea", Toast.LENGTH_LONG).show();
+                customErrorToast("Nu s-a efectuat stergerea");
             }
         });
     }
@@ -109,14 +112,14 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.body() == null) {
                     clearText();
-                    Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceti!", Toast.LENGTH_LONG).show();
+                    customErrorToast("Date incorecte, reintroduceti!");
                 } else
                     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Nu s-a gasit persoana", Toast.LENGTH_LONG).show();
+                customErrorToast("Nu s-a gasit persoana");
             }
         });
     }
@@ -124,5 +127,17 @@ public class CancelPerson extends AppCompatActivity {
     private void clearText() {
         userName.setText("");
         plateRegister.setText("");
+    }
+
+    private void customErrorToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.relativeLayout1));
+        TextView text = (TextView) layout.findViewById(R.id.textView2);
+        text.setText(message);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.TOP, 0, 140);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }
