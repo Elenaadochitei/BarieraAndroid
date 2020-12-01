@@ -102,7 +102,6 @@ public class ShareParking extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ShareParking.this);
                 datePickerDialog.setOnDateSetListener(selectedStartDate);
                 datePickerDialog.show();
-
             }
         });
         expirationDate.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +110,6 @@ public class ShareParking extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(ShareParking.this);
                 datePickerDialog.setOnDateSetListener(selectedEndDate);
                 datePickerDialog.show();
-
             }
         });
     }

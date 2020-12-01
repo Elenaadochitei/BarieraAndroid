@@ -20,7 +20,7 @@ import retrofit2.http.QueryMap;
 
 public interface ConectWithJava {
 
-    String API_ROUTE = "postNewUser";
+    String REGISTER_USER_CAR = "registerUserCar";
 
     String API_ROUTEE = "updateData/{id}";
 
@@ -36,7 +36,7 @@ public interface ConectWithJava {
             "Content-type: application/json"
     })
 
-    @POST(API_ROUTE)
+    @POST(REGISTER_USER_CAR)
     Call<NameAndPlateRegister> insertNewUser(@Header("Authorization") String token, @Body NameAndPlateRegister insertNewUser);
 
     @PUT(API_ROUTEE)
