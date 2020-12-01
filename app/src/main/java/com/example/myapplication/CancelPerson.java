@@ -15,12 +15,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.retrofit.ConectWithJava;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -39,7 +45,6 @@ public class CancelPerson extends AppCompatActivity {
     private TextView userName;
     private Button saveButton;
     private ConectWithJava conectWithJava;
-    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +82,8 @@ public class CancelPerson extends AppCompatActivity {
             conectWithJava = retrofit.create(ConectWithJava.class);
             deleteNameAndPlateRegister();
         } catch (Exception e) {
-            toast = Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG);
-            customErrorToast();
+        //    toast = Toast.makeText(getApplicationContext(), "Date Nesalvate", Toast.LENGTH_LONG);
+         //   customErrorToast();
         }
         Toast.makeText(this, "Date Salvate", Toast.LENGTH_SHORT).show();
     }
@@ -102,8 +107,8 @@ public class CancelPerson extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Nu s-a efectuat ștergerea", Toast.LENGTH_LONG);
-                customErrorToast();
+             //   toast = Toast.makeText(getApplicationContext(), "Nu s-a efectuat ștergerea", Toast.LENGTH_LONG);
+           //     customErrorToast();
             }
         });
     }
@@ -115,17 +120,19 @@ public class CancelPerson extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.body() == null) {
                     clearText();
-                    toast = Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceți!", Toast.LENGTH_LONG);
-                    customErrorToast();
+                  Toast  toast = Toast.makeText(getApplicationContext(), "Date incorecte, reintroduceți!", Toast.LENGTH_LONG);
+                    customErrorToast("Date incorecte, reintroduceți!");
+                 //   text.setText("Date incorecte, reintroduceți!");
+
                 } else
-               //     Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
-                customErrorToast();
+                    Toast.makeText(getApplicationContext(), "Date salvate", Toast.LENGTH_LONG).show();
+                    customErrorToast("Date saaaalvate");
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                toast = Toast.makeText(getApplicationContext(), "Nu s-a găsit persoana", Toast.LENGTH_LONG);
-                customErrorToast();
+             //   toast = Toast.makeText(getApplicationContext(), "Nu s-a găsit persoana", Toast.LENGTH_LONG);
+                //  customErrorToast();
             }
         });
     }
@@ -135,17 +142,16 @@ public class CancelPerson extends AppCompatActivity {
         plateRegister.setText("");
     }
 
-    @SuppressLint("SetTextI18n")
-    private void customErrorToast() {
+    private void customErrorToast(String message) {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast,
-                (ViewGroup) findViewById(R.id.relativeLayout1));
-//        TextView text = (TextView) layout.findViewById(R.id.text);
-//        text.setText("Hello! This is a custom toast!");
-        toast = new Toast(getApplicationContext());
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.relativeLayout1));
+        TextView text = (TextView) layout.findViewById(R.id.textView2);
+        text.setText(message);
+        Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.TOP, 0, 140);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
     }
+
 }
